@@ -6,7 +6,8 @@ Make sure that you have everything in the requirements.txt file installed and th
 Use the following to login:
     instaloader -l USERNAME
 
-If the login fails, you may need to use import_firefox_session.py to get your session file and login using that.
+If the login fails, you may need to use use your session file to login.
+For more details, see https://instaloader.github.io/troubleshooting.html#login-error.
 """
 
 import time
