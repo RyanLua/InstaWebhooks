@@ -16,6 +16,8 @@ import time
 INSTAGRAM_PROFILE = input("Enter the Instagram account you want monitor: ")
 WEBHOOK_URL = input("Enter the Discord webhook URL: ")
 
+refresh_interval = 600  # How often to check for new posts (in seconds)
+
 # Get instance
 L = instaloader.Instaloader()
 
@@ -34,6 +36,6 @@ def check_for_new_posts():
         break  # Only check the most recent post
 
 # Every 10 minutes
-while True:
+while __name__ == "__main__":
     check_for_new_posts()
-    time.sleep(600)  # Sleep for 600 seconds (10 minutes)
+    time.sleep(refresh_interval)  # Sleep for 600 seconds (10 minutes)
