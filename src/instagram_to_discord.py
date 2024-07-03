@@ -21,30 +21,30 @@ POST_REFRESH_INTERVAL = 600  # How often to check for new posts (in seconds)
 
 L = instaloader.Instaloader()
 
-def send_to_discord(post_url, image_url, author_name, author_icon_url):
+def send_to_discord(post_url, image_url, author_name, author_icon_url, post_description):
     """Send a new Instagram post to Discord using a webhook."""
     data = {
-    "content": "{post_url}",
-    "embeds": [
-        {
-            "description": "Description",
-            "color": None,
-            "author": {
-                "name": {author_name},
-                "url": "https://www.instagram.com/{author_name}",
-                "icon_url": {author_icon_url}
-            },
-            "footer": {
-                "text": "Instagram",
-                "icon_url": "https://discohook.org/static/discord-avatar.png"
-            },
-            "image": {
-                "url": {image_url}
+        "content": f"{post_url}",
+        "embeds": [
+            {
+                "description": post_description,
+                "color": None,
+                "author": {
+                    "name": author_name,
+                    "url": f"https://www.instagram.com/{author_name}",
+                    "icon_url": author_icon_url
+                },
+                "footer": {
+                    "text": "Instagram",
+                    "icon_url": "https://discohook.org/static/discord-avatar.png"
+                },
+                "image": {
+                    "url": image_url
+                }
             }
-        }
-    ],
-    "attachments": []
-}
+        ],
+        "attachments": []
+    }
     response = requests.post(DISCORD_WEBHOOK_URL, json=data, timeout=10)
     print("Notification sent to Discord:", response.status_code)
 
@@ -56,8 +56,15 @@ def check_for_new_posts():
         image_url = post.url
         author_name = profile.username
         author_icon_url = profile.profile_pic_url
+        post_description = post.caption
 
-        send_to_discord(instagram_post_url, image_url, author_name, author_icon_url)
+        send_to_discord(
+            instagram_post_url,
+            image_url,
+            author_name,
+            author_icon_url,
+            post_description
+        )
         break
 
 # Every 10 minutes
