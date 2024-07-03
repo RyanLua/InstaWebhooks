@@ -1,2 +1,5 @@
-# Instagram-Post-to-Discord-Webhook
-Finds new posts for any public Instagram account and posts it in Discord using a webhook.
+# InstaWebhooks
+
+> Instagram webhooks for Discord
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/RyanLua/InstaWebhooks?quickstart=1)
