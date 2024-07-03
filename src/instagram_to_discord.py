@@ -1,7 +1,8 @@
 """
 Get new Instagram posts from any Instagram profile and send them to Discord using webhooks.
 
-Make sure that you have everything in the requirements.txt file installed and that you are logged into Instaloader.
+Make sure that you have everything in the requirements.txt file installed and that you are logged
+into Instaloader.
 
 Use the following to login:
     instaloader -l USERNAME
