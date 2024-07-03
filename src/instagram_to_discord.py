@@ -28,7 +28,7 @@ def send_to_discord(post_url, image_url, author_name, author_icon_url, post_desc
         "embeds": [
             {
                 "description": post_description,
-                "color": None,
+                "color": 13500529,
                 "author": {
                     "name": author_name,
                     "url": f"https://www.instagram.com/{author_name}",
@@ -36,7 +36,7 @@ def send_to_discord(post_url, image_url, author_name, author_icon_url, post_desc
                 },
                 "footer": {
                     "text": "Instagram",
-                    "icon_url": "https://discohook.org/static/discord-avatar.png"
+                    "icon_url": "https://images-ext-1.discordapp.net/external/C6jCIKlXguRhfmSp6USkbWsS11fnsbBgMXiclR2R4ps/https/www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
                 },
                 "image": {
                     "url": image_url
