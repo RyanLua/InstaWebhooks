@@ -22,6 +22,7 @@ POST_REFRESH_INTERVAL = 600  # How often to check for new posts (in seconds)
 L = instaloader.Instaloader()
 
 def send_to_discord(post_url, image_url, author_name, author_icon_url):
+    """Send a new Instagram post to Discord using a webhook."""
     data = {
     "content": "{post_url}",
     "embeds": [
@@ -48,6 +49,7 @@ def send_to_discord(post_url, image_url, author_name, author_icon_url):
     print("Notification sent to Discord:", response.status_code)
 
 def check_for_new_posts():
+    """Check for new Instagram posts and send them to Discord."""
     profile = instaloader.Profile.from_username(L.context, TARGET_INSTAGRAM_PROFILE)
     for post in profile.get_posts():
         instagram_post_url = "https://instagram.com/p/" + post.shortcode
