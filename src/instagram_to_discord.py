@@ -23,28 +23,29 @@ REFRESH_INTERVAL = 3600
 
 L = instaloader.Instaloader()
 
-def send_to_discord(post_url, image_url, author_name, author_icon_url, post_description, post_timestamp, author_fullname):
+def send_to_discord(post_details):
     """Send a new Instagram post to Discord using a webhook."""
+    icon_url = "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
     data = {
-        "content": f"{post_url}",
+        "content": f"{post_details.post_url}",
         "embeds": [
             {
-                "title": author_fullname,
-                "description": post_description,
-                "url": post_url,
+                "title": post_details.author_fullname,
+                "description": post_details.post_description,
+                "url": post_details.post_url,
                 "color": 13500529,
-                "timestamp": post_timestamp.strftime("%Y-%m-%dT%H:%M:%S"),
+                "timestamp": post_details.post_timestamp.strftime("%Y-%m-%dT%H:%M:%S"),
                 "author": {
-                    "name": author_name,
-                    "url": f"https://www.instagram.com/{author_name}/",
-                    "icon_url": author_icon_url
+                    "name": post_details.author_name,
+                    "url": f"https://www.instagram.com/{post_details.author_name}/",
+                    "icon_url": post_details.author_icon_url
                 },
                 "footer": {
                     "text": "Instagram",
-                    "icon_url": "https://images-ext-1.discordapp.net/external/C6jCIKlXguRhfmSp6USkbWsS11fnsbBgMXiclR2R4ps/https/www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
+                    "icon_url": icon_url
                 },
                 "image": {
-                    "url": image_url
+                    "url": post_details.image_url
                 }
             }
         ],
@@ -62,23 +63,17 @@ def check_for_new_posts():
     since = until.replace(second=until.second-REFRESH_INTERVAL)
 
     for post in takewhile(lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)):
-        instagram_post_url = "https://instagram.com/p/" + post.shortcode + "/"
-        image_url = post.url
-        author_name = profile.username
-        author_icon_url = profile.profile_pic_url
-        post_description = post.caption
-        post_timestamp = post.date
-        author_fullname = profile.full_name
+        post_details = {
+            "post_url": "https://instagram.com/p/" + post.shortcode + "/",
+            "image_url": post.url,
+            "author_name": profile.username,
+            "author_icon_url": profile.profile_pic_url,
+            "post_description": post.caption,
+            "post_timestamp": post.date,
+            "author_fullname": profile.full_name
+        }
 
-        send_to_discord(
-            instagram_post_url,
-            image_url,
-            author_name,
-            author_icon_url,
-            post_description,
-            post_timestamp,
-            author_fullname
-        )
+        send_to_discord(post_details)
         break
 
 while __name__ == "__main__":
