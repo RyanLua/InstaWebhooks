@@ -59,7 +59,7 @@ def check_for_new_posts():
     posts = profile.get_posts()
 
     until = datetime.now()
-    since = until.replace(hour=until.second-REFRESH_INTERVAL)  # Check for posts in the last hour
+    since = until.replace(second=until.second-REFRESH_INTERVAL)
 
     for post in takewhile(lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)):
         instagram_post_url = "https://instagram.com/p/" + post.shortcode + "/"
