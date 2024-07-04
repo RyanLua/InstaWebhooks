@@ -52,7 +52,7 @@ def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord."""
     profile = instaloader.Profile.from_username(L.context, TARGET_INSTAGRAM_PROFILE)
     for post in profile.get_posts():
-        instagram_post_url = "https://instagram.com/p/" + post.shortcode
+        instagram_post_url = "https://instagram.com/p/" + post.shortcode + "/"
         image_url = post.url
         author_name = profile.username
         author_icon_url = profile.profile_pic_url
