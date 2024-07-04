@@ -12,12 +12,13 @@ For more details, see https://instaloader.github.io/troubleshooting.html#login-e
 """
 
 import time
+from itertools import dropwhile, takewhile
+from datetime import datetime
 import requests
 import instaloader
 
 TARGET_INSTAGRAM_PROFILE = input("Enter the Instagram account you want monitor: ")
 DISCORD_WEBHOOK_URL = input("Enter the Discord webhook URL: ")
-POST_REFRESH_INTERVAL = 600  # How often to check for new posts (in seconds)
 
 L = instaloader.Instaloader()
 
@@ -54,7 +55,12 @@ def send_to_discord(post_url, image_url, author_name, author_icon_url, post_desc
 def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord."""
     profile = instaloader.Profile.from_username(L.context, TARGET_INSTAGRAM_PROFILE)
-    for post in profile.get_posts():
+    posts = profile.get_posts()
+
+    until = datetime.now()
+    since = until.replace(hour=until.hour-1)  # Check for posts in the last hour
+
+    for post in takewhile(lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)):
         instagram_post_url = "https://instagram.com/p/" + post.shortcode + "/"
         image_url = post.url
         author_name = profile.username
@@ -74,7 +80,6 @@ def check_for_new_posts():
         )
         break
 
-# Every 10 minutes
 while __name__ == "__main__":
     check_for_new_posts()
-    time.sleep(POST_REFRESH_INTERVAL)  # Sleep for 600 seconds (10 minutes)
+    time.sleep(3600)
