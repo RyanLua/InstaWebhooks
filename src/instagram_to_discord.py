@@ -19,6 +19,7 @@ import instaloader
 
 TARGET_INSTAGRAM_PROFILE = input("Enter the Instagram account you want monitor: ")
 DISCORD_WEBHOOK_URL = input("Enter the Discord webhook URL: ")
+REFRESH_INTERVAL = 3600
 
 L = instaloader.Instaloader()
 
@@ -58,7 +59,7 @@ def check_for_new_posts():
     posts = profile.get_posts()
 
     until = datetime.now()
-    since = until.replace(hour=until.hour-1)  # Check for posts in the last hour
+    since = until.replace(hour=until.second-REFRESH_INTERVAL)  # Check for posts in the last hour
 
     for post in takewhile(lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)):
         instagram_post_url = "https://instagram.com/p/" + post.shortcode + "/"
@@ -82,4 +83,4 @@ def check_for_new_posts():
 
 while __name__ == "__main__":
     check_for_new_posts()
-    time.sleep(3600)
+    time.sleep(REFRESH_INTERVAL)
