@@ -31,7 +31,7 @@ def send_to_discord(post_url, image_url, author_name, author_icon_url, post_desc
                 "color": 13500529,
                 "author": {
                     "name": author_name,
-                    "url": f"https://www.instagram.com/{author_name}",
+                    "url": f"https://www.instagram.com/{author_name}/",
                     "icon_url": author_icon_url
                 },
                 "footer": {
