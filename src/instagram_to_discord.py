@@ -17,11 +17,23 @@ from datetime import datetime
 import requests
 import instaloader
 
-TARGET_INSTAGRAM_PROFILE = input("Enter the Instagram account you want monitor: ")
+L = instaloader.Instaloader()
+
+POST_REFRESH_INTERVAL = 3600  # Seconds
+
+# Terrible and repetitive code, but it works for now.
+TARGET_INSTAGRAM_PROFILE = input(
+    "Enter the Instagram account you want to create a webhook for: ")
+
+profile = instaloader.Profile.from_username(
+    L.context, TARGET_INSTAGRAM_PROFILE)
+
+print(f"\nProfile information\n\nName: {profile.full_name}\nUsername: {profile.username}\nPosts: {
+      profile.mediacount}\nFollowers: {profile.followers}\nFollowing: {profile.followees}\n")
+
 DISCORD_WEBHOOK_URL = input("Enter the Discord webhook URL: ")
 REFRESH_INTERVAL = 3600
 
-L = instaloader.Instaloader()
 
 def send_to_discord(post_details):
     """Send a new Instagram post to Discord using a webhook."""
@@ -54,13 +66,15 @@ def send_to_discord(post_details):
     response = requests.post(DISCORD_WEBHOOK_URL, json=data, timeout=10)
     print("Notification sent to Discord:", response.status_code)
 
+
 def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord."""
-    profile = instaloader.Profile.from_username(L.context, TARGET_INSTAGRAM_PROFILE)
+    profile = instaloader.Profile.from_username(
+        L.context, TARGET_INSTAGRAM_PROFILE)
     posts = profile.get_posts()
 
     until = datetime.now()
-    since = until.replace(second=until.second-REFRESH_INTERVAL)
+    since = until.replace(second=until.second-POST_REFRESH_INTERVAL)
 
     for post in takewhile(lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)):
         post_details = {
@@ -76,6 +90,7 @@ def check_for_new_posts():
         send_to_discord(post_details)
         break
 
+
 while __name__ == "__main__":
     check_for_new_posts()
-    time.sleep(REFRESH_INTERVAL)
+    time.sleep(POST_REFRESH_INTERVAL)
