@@ -11,10 +11,10 @@ If the login fails, you may need to use use your session file to login.
 For more details, see https://instaloader.github.io/troubleshooting.html#login-error.
 """
 
-import time
-import requests
 from datetime import datetime
 from itertools import dropwhile, takewhile
+import time
+import requests
 from instaloader import Instaloader, Profile
 
 L = Instaloader()
@@ -75,8 +75,6 @@ def send_to_discord(post_details):
 
 def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord."""
-    profile = Profile.from_username(
-        L.context, TARGET_INSTAGRAM_USER)
     posts = profile.get_posts()
 
     until = datetime.now()
