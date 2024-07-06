@@ -70,11 +70,14 @@ def send_to_discord(post_details):
         "attachments": []
     }
     response = requests.post(DISCORD_WEBHOOK_URL, json=data, timeout=10)
-    print("Notification sent to Discord:", response.status_code)
+    print("Post sent to Discord:", response.status_code)
 
 
 def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord."""
+
+    print("\nChecking for new posts...")
+
     posts = profile.get_posts()
 
     until = datetime.now()
@@ -91,6 +94,7 @@ def check_for_new_posts():
             "author_fullname": profile.full_name
         }
 
+        print(f"New post found: {post_details['post_url']}")
         send_to_discord(post_details)
         break
 
