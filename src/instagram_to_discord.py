@@ -12,12 +12,12 @@ For more details, see https://instaloader.github.io/troubleshooting.html#login-e
 """
 
 import time
-from itertools import dropwhile, takewhile
-from datetime import datetime
 import requests
-import instaloader
+from datetime import datetime
+from itertools import dropwhile, takewhile
+from instaloader import Instaloader, Profile
 
-L = instaloader.Instaloader()
+L = Instaloader()
 
 REFRESH_INTERVAL_SECONDS = 3600
 
@@ -25,7 +25,7 @@ REFRESH_INTERVAL_SECONDS = 3600
 TARGET_INSTAGRAM_USER = input(
     "Enter the Instagram username you want to create a webhook for: ")
 
-profile = instaloader.Profile.from_username(
+profile = Profile.from_username(
     L.context, TARGET_INSTAGRAM_USER)
 
 print(f"""
@@ -75,7 +75,7 @@ def send_to_discord(post_details):
 
 def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord."""
-    profile = instaloader.Profile.from_username(
+    profile = Profile.from_username(
         L.context, TARGET_INSTAGRAM_USER)
     posts = profile.get_posts()
 
