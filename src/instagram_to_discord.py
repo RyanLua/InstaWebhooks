@@ -36,29 +36,38 @@ Following: {profile.followees}
 DISCORD_WEBHOOK_URL = input("Enter your Discord webhook URL: ")
 
 
-def send_to_discord(post_details):
+def send_to_discord(post):
     """Send a new Instagram post to Discord using a webhook."""
+
+    post_url = "https://instagram.com/p/" + post.shortcode + "/"
+    image_url = post.url
+    author_name = profile.username
+    author_icon_url = profile.profile_pic_url
+    post_description = post.caption
+    post_timestamp = post.date
+    author_fullname = profile.full_name
+
     icon_url = "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
     data = {
-        "content": f"{post_details['post_url']}",
+        "content": f"{post_url}",
         "embeds": [
             {
-                "title": post_details['author_fullname'],
-                "description": post_details['post_description'],
-                "url": post_details['post_url'],
+                "title": author_fullname,
+                "description": post_description,
+                "url": post_url,
                 "color": 13500529,
-                "timestamp": post_details['post_timestamp'].strftime("%Y-%m-%dT%H:%M:%S"),
+                "timestamp": post_timestamp.strftime("%Y-%m-%dT%H:%M:%S"),
                 "author": {
-                    "name": post_details['author_name'],
-                    "url": f"https://www.instagram.com/{post_details['author_name']}/",
-                    "icon_url": post_details['author_icon_url']
+                    "name": author_name,
+                    "url": f"https://www.instagram.com/{author_name}/",
+                    "icon_url": author_icon_url
                 },
                 "footer": {
                     "text": "Instagram",
                     "icon_url": icon_url
                 },
                 "image": {
-                    "url": post_details['image_url']
+                    "url": image_url
                 }
             }
         ],
@@ -77,18 +86,8 @@ def check_for_new_posts():
     posts = profile.get_posts()
 
     for post in posts:
-        post_details = {
-            "post_url": "https://instagram.com/p/" + post.shortcode + "/",
-            "image_url": post.url,
-            "author_name": profile.username,
-            "author_icon_url": profile.profile_pic_url,
-            "post_description": post.caption,
-            "post_timestamp": post.date,
-            "author_fullname": profile.full_name
-        }
-
-        print(f"New post found: {post_details['post_url']}")
-        send_to_discord(post_details)
+        print(f"New post found: https://instagram.com/p/{post.shortcode}/")
+        send_to_discord(post)
         break
 
 
