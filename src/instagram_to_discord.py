@@ -12,8 +12,14 @@ For more details, see https://instaloader.github.io/troubleshooting.html#login-e
 """
 
 from time import sleep
+import logging
 from instaloader import Instaloader, Profile
 import requests
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    level=logging.DEBUG)
 
 L = Instaloader()
 
@@ -34,7 +40,6 @@ Following: {profile.followees}
 """)
 
 DISCORD_WEBHOOK_URL = input("Enter your Discord webhook URL: ")
-
 
 def send_to_discord(post):
     """Send a new Instagram post to Discord using a webhook."""
@@ -75,18 +80,18 @@ def send_to_discord(post):
     }
 
     response = requests.post(DISCORD_WEBHOOK_URL, json=data, timeout=10)
-    print("Post sent to Discord:", response.status_code)
+    logger.info("Post sent to Discord: %s", response.status_code)
 
 
 def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord."""
 
-    print("Checking for new posts...")
+    logger.info('Checking for new posts: %s', TARGET_INSTAGRAM_USER)
 
     posts = profile.get_posts()
 
     for post in posts:
-        print(f"New post found: https://instagram.com/p/{post.shortcode}/")
+        logger.info('New post found: %s', post.shortcode)
         send_to_discord(post)
         break
 
