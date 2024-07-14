@@ -8,6 +8,7 @@ from argparse import ArgumentTypeError, ArgumentParser
 from time import sleep
 from instaloader import Instaloader, Profile
 import requests
+from requests.exceptions import HTTPError
 
 
 def instagram_username(arg_value):
@@ -77,9 +78,9 @@ def send_to_discord(post):
     post_description = post.caption
     post_timestamp = post.date
     author_fullname = profile.full_name
-
     icon_url = "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
-    data = {
+
+    payload = {
         "content": f"{post_url}",
         "embeds": [
             {
@@ -105,15 +106,21 @@ def send_to_discord(post):
         "attachments": []
     }
 
-    response = requests.post(args.discord_webhook_url, json=data, timeout=10)
-    logger.info("Post sent to Discord: %s", response.status_code)
+    try:
+        logger.debug("Sending post sent to Discord")
+        r = requests.post(args.discord_webhook_url, json=payload, timeout=10)
+        r.raise_for_status()
+    except HTTPError as http_error:
+        logger.error("HTTP error occurred: %s", http_error)
+    else:
+        logger.info("Post sent successfully: %s", post_url)
 
 
 def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord."""
 
-    logger.info('Checking for new posts: https://www.instagram.com/%s',
-                args.instagram_username)
+    logger.debug('Checking for new posts: https://www.instagram.com/%s',
+                 args.instagram_username)
 
     posts = profile.get_posts()
 
