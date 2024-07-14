@@ -5,6 +5,8 @@ Get new Instagram posts from any Instagram profile and send them to Discord usin
 import re
 import logging
 from argparse import ArgumentTypeError, ArgumentParser
+from datetime import datetime, timedelta
+from itertools import dropwhile, takewhile
 from time import sleep
 from instaloader import Instaloader, Profile
 import requests
@@ -125,7 +127,10 @@ def check_for_new_posts():
     posts = Profile.from_username(
         Instaloader().context, args.instagram_username).get_posts()
 
-    for post in posts:
+    since = datetime.now() - timedelta(seconds=args.refresh_interval)
+    until = datetime.now()
+
+    for post in takewhile(lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)):
         logger.info('New post found: https://instagram.com/p/%s',
                     post.shortcode)
         send_to_discord(post)
