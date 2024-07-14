@@ -2,14 +2,15 @@
 Get new Instagram posts from any Instagram profile and send them to Discord using webhooks.
 """
 
-import re
 import logging
-from argparse import ArgumentTypeError, ArgumentParser
+import re
+from argparse import ArgumentParser, ArgumentTypeError
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
-from instaloader import Instaloader, Profile
+
 import requests
+from instaloader import Instaloader, Profile
 from requests.exceptions import HTTPError
 
 
