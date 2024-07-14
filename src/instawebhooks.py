@@ -10,7 +10,7 @@ from itertools import dropwhile, takewhile
 from time import sleep
 
 import requests
-from instaloader import Instaloader, Post, Profile
+from instaloader import Instaloader, LoginRequiredException, Post, Profile
 from requests.exceptions import HTTPError
 
 
@@ -66,6 +66,21 @@ if args.verbose:
 
 # Log the start of the program
 logger.info("Starting InstaWebhooks...")
+
+try:
+    Profile.from_username(
+        Instaloader().context, args.instagram_username).get_posts()
+except LoginRequiredException as login_error:
+    logger.critical(
+        """instaloader: error: %s\n
+    You're not logged into Instaloader. Login to your Instagram account in Instaloader using:
+      instaloader --login YOUR-USERNAME
+    or
+      instaloader --load-cookies BROWSER-NAME
+
+Instaloader Documentation: https://instaloader.github.io/cli-options.html#login-download-private-profiles
+""", login_error)
+    exit(1)
 
 
 def create_embed_json(post: Post):
