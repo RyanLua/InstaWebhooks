@@ -65,9 +65,6 @@ if args.verbose:
 logger.info("Starting InstaWebhooks for https://www.instagram.com/%s on %s",
             args.instagram_username, args.discord_webhook_url)
 
-# Initialize Instaloader and get the Instagram profile
-L = Instaloader()
-
 
 def send_to_discord(post):
     """Send a new Instagram post to Discord using a webhook."""
@@ -126,7 +123,7 @@ def check_for_new_posts():
                  args.instagram_username)
 
     posts = Profile.from_username(
-        L.context, args.instagram_username).get_posts()
+        Instaloader().context, args.instagram_username).get_posts()
 
     for post in posts:
         logger.info('New post found: https://instagram.com/p/%s',
