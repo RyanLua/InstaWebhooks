@@ -4,6 +4,7 @@ Get new Instagram posts from any Instagram profile and send them to Discord usin
 
 import logging
 import re
+import sys
 from argparse import ArgumentParser, ArgumentTypeError
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
@@ -79,7 +80,7 @@ except LoginRequiredException as login_error:
       instaloader --load-cookies BROWSER-NAME\n
 Documentation: https://instaloader.github.io/cli-options.html#login-download-private-profiles
 """, login_error)
-    exit(1)
+    sys.exit(1)
 
 
 def create_embed_json(post: Post):
