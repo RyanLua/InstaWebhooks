@@ -4,7 +4,7 @@ Get new Instagram posts from any Instagram profile and send them to Discord usin
 
 import re
 import logging
-import argparse
+from argparse import ArgumentTypeError, ArgumentParser
 from time import sleep
 from instaloader import Instaloader, Profile
 import requests
@@ -14,7 +14,7 @@ def instagram_username(arg_value):
     """Instagram username type"""
     pattern = re.compile(r'^[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$')
     if not pattern.match(arg_value):
-        raise argparse.ArgumentTypeError(
+        raise ArgumentTypeError(
             f"invalid username value: '{arg_value}': must meet Instagram username requirements")
     return arg_value
 
@@ -24,7 +24,7 @@ def discord_webhook_url(arg_value):
     pattern = re.compile(
         r'^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$')
     if not pattern.match(arg_value):
-        raise argparse.ArgumentTypeError(
+        raise ArgumentTypeError(
             f"invalid url value: '{arg_value}': must be a valid Discord webhook URL")
     return arg_value
 
@@ -37,7 +37,7 @@ logging.basicConfig(
     level=logging.INFO)
 
 # Parse command line arguments
-parser = argparse.ArgumentParser(
+parser = ArgumentParser(
     prog='instawebhooks',
     description='Monitor Instagram accounts for new posts and send them to a Discord webhook',
     epilog='Documentation: https://github.com/RaenLua/InstaWebhooks')
