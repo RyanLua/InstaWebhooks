@@ -19,7 +19,7 @@ Monitor Instagram accounts for new posts and send them to a Discord webhook.
 $ python instawebhooks.py <instagram_username> <discord_webhook_url>
 ```
 
-![Example of a new post notification](assets/ScreenshotEmbedExample.png)
+<img alt="Example of a new post notification" src="assets/ScreenshotEmbedExample.png" width="512px" />
 
 ## Installation
 
