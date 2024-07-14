@@ -65,8 +65,7 @@ if args.verbose:
     logger.debug("Verbose output enabled.")
 
 # Log the start of the program
-logger.info("Starting InstaWebhooks for https://www.instagram.com/%s on %s",
-            args.instagram_username, args.discord_webhook_url)
+logger.info("Starting InstaWebhooks...")
 
 
 def create_embed_json(post: Post):
@@ -109,14 +108,13 @@ def send_to_discord(post: Post):
     except HTTPError as http_error:
         logger.error("HTTP error occurred: %s", http_error)
     else:
-        logger.info("Post sent successfully: %s", post_url)
+        logger.info("New post sent successfully: %s", r.text)
 
 
 def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord"""
 
-    logger.debug('Checking for new posts: https://www.instagram.com/%s',
-                 args.instagram_username)
+    logger.debug('Checking for new posts')
 
     posts = Profile.from_username(
         Instaloader().context, args.instagram_username).get_posts()
@@ -124,12 +122,26 @@ def check_for_new_posts():
     since = datetime.now() - timedelta(seconds=args.refresh_interval)
     until = datetime.now()
 
+    new_posts_found = False
+
     for post in takewhile(lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)):
-        logger.info('New post found: https://instagram.com/p/%s',
-                    post.shortcode)
+        new_posts_found = True
+        logger.debug('New post found: https://instagram.com/p/%s',
+                     post.shortcode)
         send_to_discord(post)
+
+    if not new_posts_found:
+        logger.debug('No new posts found.')
 
 
 if __name__ == "__main__":
+    logger.info("InstaWebhooks started successfully.")
+
+    logger.debug("Monitoring Instagram account: %s", args.instagram_username)
+    logger.debug("Sending new posts to Discord webhook: %s",
+                 args.discord_webhook_url)
+    logger.debug("Checking for new posts every %s seconds",
+                 args.refresh_interval)
+
     check_for_new_posts()
     sleep(args.refresh_interval)
