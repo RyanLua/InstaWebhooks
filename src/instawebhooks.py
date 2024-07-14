@@ -10,12 +10,12 @@ from itertools import dropwhile, takewhile
 from time import sleep
 
 import requests
-from instaloader import Instaloader, Profile
+from instaloader import Instaloader, Post, Profile
 from requests.exceptions import HTTPError
 
 
-def instagram_username(arg_value):
-    """Instagram username type"""
+def instagram_username(arg_value: str):
+    """Instagram username"""
     pattern = re.compile(r'^[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$')
     if not pattern.match(arg_value):
         raise ArgumentTypeError(
@@ -23,8 +23,8 @@ def instagram_username(arg_value):
     return arg_value
 
 
-def discord_webhook_url(arg_value):
-    """Discord webhook URL type"""
+def discord_webhook_url(arg_value: str):
+    """Discord webhook URL"""
     pattern = re.compile(
         r'^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$')
     if not pattern.match(arg_value):
@@ -69,8 +69,8 @@ logger.info("Starting InstaWebhooks for https://www.instagram.com/%s on %s",
             args.instagram_username, args.discord_webhook_url)
 
 
-def send_to_discord(post):
-    """Send a new Instagram post to Discord using a webhook."""
+def send_to_discord(post: Post):
+    """Send a new Instagram post to Discord using a webhook"""
 
     # Post data
     post_url = "https://instagram.com/p/" + post.shortcode + "/"
@@ -120,7 +120,7 @@ def send_to_discord(post):
 
 
 def check_for_new_posts():
-    """Check for new Instagram posts and send them to Discord."""
+    """Check for new Instagram posts and send them to Discord"""
 
     logger.debug('Checking for new posts: https://www.instagram.com/%s',
                  args.instagram_username)
