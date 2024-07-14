@@ -44,7 +44,7 @@ logging.basicConfig(
 parser = ArgumentParser(
     prog='InstaWebhooks',
     description='Monitor Instagram accounts for new posts and send them to a Discord webhook',
-    epilog='Documentation: https://github.com/RaenLua/InstaWebhooks')
+    epilog='https://github.com/RaenLua/InstaWebhooks')
 parser.add_argument("instagram_username",
                     help="the Instagram username to monitor for new posts",
                     type=instagram_username)
