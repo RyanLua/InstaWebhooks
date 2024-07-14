@@ -76,9 +76,8 @@ except LoginRequiredException as login_error:
     You're not logged into Instaloader. Login to your Instagram account in Instaloader using:
       instaloader --login YOUR-USERNAME
     or
-      instaloader --load-cookies BROWSER-NAME
-
-Instaloader Documentation: https://instaloader.github.io/cli-options.html#login-download-private-profiles
+      instaloader --load-cookies BROWSER-NAME\n
+Documentation: https://instaloader.github.io/cli-options.html#login-download-private-profiles
 """, login_error)
     exit(1)
 
