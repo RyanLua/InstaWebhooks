@@ -134,7 +134,6 @@ def check_for_new_posts():
         logger.info('New post found: https://instagram.com/p/%s',
                     post.shortcode)
         send_to_discord(post)
-        break
 
 
 if __name__ == "__main__":
