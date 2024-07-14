@@ -39,7 +39,7 @@ logging.basicConfig(
 
 # Parse command line arguments
 parser = ArgumentParser(
-    prog='instawebhooks',
+    prog='InstaWebhooks',
     description='Monitor Instagram accounts for new posts and send them to a Discord webhook',
     epilog='Documentation: https://github.com/RaenLua/InstaWebhooks')
 parser.add_argument("instagram_username",
@@ -53,6 +53,7 @@ parser.add_argument("-v", "--verbose", help="increase output verbosity",
 parser.add_argument("-i", "--refresh-interval",
                     help="time in seconds to wait before checking for new posts again",
                     type=int, default=3600)
+parser.add_argument("--version", action="version", version="%(prog)s 0.0.1")
 args = parser.parse_args()
 
 # Set the logger to debug if verbose is enabled
