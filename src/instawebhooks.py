@@ -69,45 +69,38 @@ logger.info("Starting InstaWebhooks for https://www.instagram.com/%s on %s",
             args.instagram_username, args.discord_webhook_url)
 
 
+def create_embed_json(post: Post):
+    """Create a Discord embed object from an Instagram post"""
+
+    footer_icon_url = "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
+
+    embed = {
+        "title": post.owner_username,
+        "description": post.caption,
+        "url": "https://instagram.com/p/" + post.shortcode + "/",
+        "color": 13500529,
+        "timestamp": post.date.strftime("%Y-%m-%dT%H:%M:%S"),
+        "author": {
+            "name": post.owner_profile.full_name,
+            "url": "https://www.instagram.com/" + post.owner_username + "/",
+            "icon_url": post.owner_profile.profile_pic_url
+        },
+        "footer": {
+            "text": "Instagram",
+            "icon_url": footer_icon_url
+        },
+        "image": {
+            "url": post.url
+        }
+    }
+
+    return embed
+
+
 def send_to_discord(post: Post):
     """Send a new Instagram post to Discord using a webhook"""
 
-    # Post data
-    post_url = "https://instagram.com/p/" + post.shortcode + "/"
-    image_url = post.url
-    author_name = post.owner_username
-    author_icon_url = post.owner_profile.profile_pic_url
-    post_description = post.caption
-    post_timestamp = post.date
-    author_fullname = post.owner_profile.full_name
-    footer_icon_url = "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
-
-    # Discord webhook embed payload
-    payload = {
-        "content": f"{post_url}",
-        "embeds": [
-            {
-                "title": author_fullname,
-                "description": post_description,
-                "url": post_url,
-                "color": 13500529,
-                "timestamp": post_timestamp.strftime("%Y-%m-%dT%H:%M:%S"),
-                "author": {
-                    "name": author_name,
-                    "url": f"https://www.instagram.com/{author_name}/",
-                    "icon_url": author_icon_url
-                },
-                "footer": {
-                    "text": "Instagram",
-                    "icon_url": footer_icon_url
-                },
-                "image": {
-                    "url": image_url
-                }
-            }
-        ],
-        "attachments": []
-    }
+    payload = create_embed_json(post)
 
     try:
         logger.debug("Sending post sent to Discord")
