@@ -61,10 +61,11 @@ if args.verbose:
     logger.setLevel(logging.DEBUG)
     logger.debug("Verbose output enabled.")
 
+# Log the start of the program
 logger.info("Starting InstaWebhooks for https://www.instagram.com/%s on %s",
             args.instagram_username, args.discord_webhook_url)
 
-# Instaloader instance
+# Initialize Instaloader and get the Instagram profile
 L = Instaloader()
 profile = Profile.from_username(L.context, args.instagram_username)
 
