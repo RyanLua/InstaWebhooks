@@ -67,21 +67,22 @@ logger.info("Starting InstaWebhooks for https://www.instagram.com/%s on %s",
 
 # Initialize Instaloader and get the Instagram profile
 L = Instaloader()
-profile = Profile.from_username(L.context, args.instagram_username)
 
 
 def send_to_discord(post):
     """Send a new Instagram post to Discord using a webhook."""
 
+    # Post data
     post_url = "https://instagram.com/p/" + post.shortcode + "/"
     image_url = post.url
-    author_name = profile.username
-    author_icon_url = profile.profile_pic_url
+    author_name = post.owner_username
+    author_icon_url = post.owner_profile.profile_pic_url
     post_description = post.caption
     post_timestamp = post.date
-    author_fullname = profile.full_name
-    icon_url = "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
+    author_fullname = post.owner_profile.full_name
+    footer_icon_url = "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
 
+    # Discord webhook embed payload
     payload = {
         "content": f"{post_url}",
         "embeds": [
@@ -98,7 +99,7 @@ def send_to_discord(post):
                 },
                 "footer": {
                     "text": "Instagram",
-                    "icon_url": icon_url
+                    "icon_url": footer_icon_url
                 },
                 "image": {
                     "url": image_url
@@ -124,7 +125,8 @@ def check_for_new_posts():
     logger.debug('Checking for new posts: https://www.instagram.com/%s',
                  args.instagram_username)
 
-    posts = profile.get_posts()
+    posts = Profile.from_username(
+        L.context, args.instagram_username).get_posts()
 
     for post in posts:
         logger.info('New post found: https://instagram.com/p/%s',
