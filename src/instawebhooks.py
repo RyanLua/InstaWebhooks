@@ -10,9 +10,13 @@ from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
 
-import requests
-from instaloader import Instaloader, LoginRequiredException, Post, Profile
-from requests.exceptions import HTTPError
+try:
+    import requests
+    from instaloader import Instaloader, LoginRequiredException, Post, Profile
+    from requests.exceptions import HTTPError
+except ModuleNotFoundError as exc:
+    raise SystemExit(
+        'Instaloader not found.\n  pip install [--user] instaloader') from exc
 
 
 def instagram_username(arg_value: str):
