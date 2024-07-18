@@ -148,12 +148,8 @@ def check_for_new_posts():
 
 if __name__ == "__main__":
     logger.info("InstaWebhooks started successfully.")
-
-    logger.debug("Monitoring Instagram account: %s", args.instagram_username)
-    logger.debug("Sending new posts to Discord webhook: %s",
-                 args.discord_webhook_url)
-    logger.debug("Checking for new posts every %s seconds",
-                 args.refresh_interval)
+    logger.info("Monitoring '%s' every %s seconds on ̀%s.",
+                args.instagram_username, args.refresh_interval, args.discord_webhook_url)
 
     check_for_new_posts()
     sleep(args.refresh_interval)
