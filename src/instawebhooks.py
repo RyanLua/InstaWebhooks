@@ -4,7 +4,6 @@ Get new Instagram posts from any Instagram profile and send them to Discord usin
 
 import logging
 import re
-import sys
 from argparse import ArgumentParser, ArgumentTypeError
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
@@ -75,16 +74,10 @@ logger.info("Starting InstaWebhooks...")
 try:
     Profile.from_username(
         Instaloader().context, args.instagram_username).get_posts()
-except LoginRequiredException as login_error:
-    logger.critical(
-        """instaloader: error: %s\n
-    You're not logged into Instaloader. Login to your Instagram account in Instaloader using:
-      instaloader --login YOUR-USERNAME
-    or
-      instaloader --load-cookies BROWSER-NAME\n
-Documentation: https://instaloader.github.io/cli-options.html#login-download-private-profiles
-""", login_error)
-    sys.exit(1)
+except LoginRequiredException as exc:
+    logger.critical("instaloader: error: %s", exc)
+    raise SystemExit(
+        'Not logged into Instaloader.\n  instaloader --login YOUR-USERNAME') from exc
 
 
 def create_embed_json(post: Post):
