@@ -1,13 +1,6 @@
-astroid==3.2.3
 certifi==2024.7.4
 charset-normalizer==3.3.2
-dill==0.3.8
 idna==3.7
 instaloader==4.12
-isort==5.13.2
-mccabe==0.7.0
-platformdirs==4.2.2
-pylint==3.2.5
 requests==2.32.3
-tomlkit==0.13.0
 urllib3==2.2.2
