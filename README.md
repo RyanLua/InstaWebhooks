@@ -25,9 +25,9 @@ Before installing, make sure you have [Python 3.8 or newer](https://www.python.o
 ```
 git clone https://github.com/RyanLua/InstaWebhooks.git
 ```
-2. Install the required Python packages by running the following command in the repository directory (we only have one package to install for now):
+2. Install the required Python packages by running the following command in the repository directory:
 ```
-pip install instaloader
+pip install -r requirements.txt
 ```
 
 Now you are ready to use the script! See the [Usage](#usage) section for more information on usage.
