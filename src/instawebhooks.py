@@ -89,13 +89,13 @@ def create_webhook_json(post: Post):
         "content": "",
         "embeds": [
             {
-                "title": post.owner_username,
+                "title": post.owner_profile.full_name,
                 "description": post.caption,
                 "url": "https://instagram.com/p/" + post.shortcode + "/",
                 "color": 13500529,
                 "timestamp": post.date.strftime("%Y-%m-%dT%H:%M:%S"),
                 "author": {
-                    "name": post.owner_profile.full_name,
+                    "name": post.owner_username,
                     "url": "https://www.instagram.com/" + post.owner_username + "/",
                     "icon_url": post.owner_profile.profile_pic_url
                 },
