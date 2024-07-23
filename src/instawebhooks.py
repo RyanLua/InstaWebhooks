@@ -126,7 +126,7 @@ def send_to_discord(post: Post):
     except HTTPError as http_error:
         logger.error("HTTP error occurred: %s", http_error)
     else:
-        logger.info("New post sent successfully: %s", r.text)
+        logger.info("New post sent to Discord successfully.")
 
 
 def check_for_new_posts():
