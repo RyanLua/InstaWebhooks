@@ -176,8 +176,9 @@ def main():
         args.discord_webhook_url,
     )
 
-    check_for_new_posts()
-    sleep(args.refresh_interval)
+    while True:
+        check_for_new_posts()
+        sleep(args.refresh_interval)
 
 
 if __name__ == "__main__":
