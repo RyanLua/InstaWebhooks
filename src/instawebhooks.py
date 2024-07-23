@@ -80,38 +80,44 @@ except LoginRequiredException as exc:
         'Not logged into Instaloader.\n  instaloader --login YOUR-USERNAME') from exc
 
 
-def create_embed_json(post: Post):
+def create_webhook_json(post: Post):
     """Create a Discord embed object from an Instagram post"""
 
     footer_icon_url = "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
 
-    embed = {
-        "title": post.owner_username,
-        "description": post.caption,
-        "url": "https://instagram.com/p/" + post.shortcode + "/",
-        "color": 13500529,
-        "timestamp": post.date.strftime("%Y-%m-%dT%H:%M:%S"),
-        "author": {
-            "name": post.owner_profile.full_name,
-            "url": "https://www.instagram.com/" + post.owner_username + "/",
-            "icon_url": post.owner_profile.profile_pic_url
-        },
-        "footer": {
-            "text": "Instagram",
-            "icon_url": footer_icon_url
-        },
-        "image": {
-            "url": post.url
-        }
+    webhook_json = {
+        "content": "",
+        "embeds": [
+            {
+                "title": post.owner_username,
+                "description": post.caption,
+                "url": "https://instagram.com/p/" + post.shortcode + "/",
+                "color": 13500529,
+                "timestamp": post.date.strftime("%Y-%m-%dT%H:%M:%S"),
+                "author": {
+                    "name": post.owner_profile.full_name,
+                    "url": "https://www.instagram.com/" + post.owner_username + "/",
+                    "icon_url": post.owner_profile.profile_pic_url
+                },
+                "footer": {
+                    "text": "Instagram",
+                    "icon_url": footer_icon_url
+                },
+                "image": {
+                    "url": post.url
+                }
+            }
+        ],
+        "attachments": []
     }
 
-    return embed
+    return webhook_json
 
 
 def send_to_discord(post: Post):
     """Send a new Instagram post to Discord using a webhook"""
 
-    payload = create_embed_json(post)
+    payload = create_webhook_json(post)
 
     try:
         logger.debug("Sending post sent to Discord")
