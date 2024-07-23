@@ -166,7 +166,8 @@ def check_for_new_posts():
         logger.debug("No new posts found.")
 
 
-if __name__ == "__main__":
+def main():
+    """Check for new Instagram posts and send them to Discord"""
     logger.info("InstaWebhooks started successfully.")
     logger.info(
         "Monitoring '%s' every %s seconds on ̀%s.",
@@ -177,3 +178,7 @@ if __name__ == "__main__":
 
     check_for_new_posts()
     sleep(args.refresh_interval)
+
+
+if __name__ == "__main__":
+    main()
