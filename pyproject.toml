@@ -1,37 +1,45 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "instawebhooks"
-version = "0.0.1"
-dependencies = [
-  "requests",
-  "instaloader",
-]
+version = "0.0.2"
+description = "Discord webhooks for new Instagram posts from any profile"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE.txt"}
+keywords = ["webhooks", "feed", "embed", "Instagram", "Discord", "CLI"]
 authors = [
   { name="Ryan Luu", email="ryan.luu@ryanluu.dev" },
 ]
-description = "Discord webhooks for new Instagram posts from any profile"
-readme = "README.md"
-keywords = ["webhooks", "feed", "embed", "Instagram", "Discord", "CLI"]
-requires-python = ">=3.8"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
   "Intended Audience :: End Users/Desktop",
   "Topic :: Utilities",
   "Topic :: Internet",
   "Topic :: Communications",
   "License :: OSI Approved :: MIT License",
-  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = [
+  "requests",
+  "instaloader",
 ]
 
 [project.urls]
 Homepage = "https://github.com/RyanLua/InstaWebhooks"
+Documentation = "https://github.com/RyanLua/InstaWebhooks/wiki"
 Repository = "https://github.com/RyanLua/InstaWebhooks.git"
 Issues = "https://github.com/RyanLua/InstaWebhooks/issues"
+Changelog = "https://github.com/RyanLua/InstaWebhooks/blob/main/CHANGELOG.md"
+
+[project.scripts]
+sample = "instawebhooks:main"
