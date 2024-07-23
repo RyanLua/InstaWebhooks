@@ -40,6 +40,8 @@ Documentation = "https://github.com/RyanLua/InstaWebhooks/wiki"
 Repository = "https://github.com/RyanLua/InstaWebhooks.git"
 Issues = "https://github.com/RyanLua/InstaWebhooks/issues"
 Changelog = "https://github.com/RyanLua/InstaWebhooks/blob/main/CHANGELOG.md"
+Discord = "https://discord.gg/wmM64GcZwe"
+Sponsor = "https://github.com/sponsors/RyanLua"
 
 [project.scripts]
 sample = "instawebhooks:main"
