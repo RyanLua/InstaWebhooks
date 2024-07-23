@@ -15,51 +15,66 @@ try:
     from requests.exceptions import HTTPError
 except ModuleNotFoundError as exc:
     raise SystemExit(
-        'Instaloader not found.\n  pip install [--user] instaloader') from exc
+        "Instaloader not found.\n  pip install [--user] instaloader"
+    ) from exc
 
 
 def instagram_username(arg_value: str):
     """Instagram username"""
-    pattern = re.compile(r'^[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$')
+    pattern = re.compile(r"^[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$")
     if not pattern.match(arg_value):
         raise ArgumentTypeError(
-            f"invalid username value: '{arg_value}': must meet Instagram username requirements")
+            f"invalid username value: '{arg_value}': must meet Instagram username requirements"
+        )
     return arg_value
 
 
 def discord_webhook_url(arg_value: str):
     """Discord webhook URL"""
     pattern = re.compile(
-        r'^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$')
+        r"^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$"
+    )
     if not pattern.match(arg_value):
         raise ArgumentTypeError(
-            f"invalid url value: '{arg_value}': must be a valid Discord webhook URL")
+            f"invalid url value: '{arg_value}': must be a valid Discord webhook URL"
+        )
     return arg_value
 
 
 # Set up logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    datefmt='%m/%d/%Y %I:%M:%S %p',
-    level=logging.INFO)
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    datefmt="%m/%d/%Y %I:%M:%S %p",
+    level=logging.INFO,
+)
 
 # Parse command line arguments
 parser = ArgumentParser(
-    prog='instawebhooks',
-    description='Monitor Instagram accounts for new posts and send them to a Discord webhook',
-    epilog='https://github.com/RaenLua/InstaWebhooks')
-parser.add_argument("instagram_username",
-                    help="the Instagram username to monitor for new posts",
-                    type=instagram_username)
+    prog="instawebhooks",
+    description="Monitor Instagram accounts for new posts and send them to a Discord webhook",
+    epilog="https://github.com/RaenLua/InstaWebhooks",
+)
 parser.add_argument(
-    "discord_webhook_url", help="the Discord webhook URL to send new posts to",
-    type=discord_webhook_url)
-parser.add_argument("-v", "--verbose", help="increase output verbosity",
-                    action="store_true")
-parser.add_argument("-i", "--refresh-interval",
-                    help="time in seconds to wait before checking for new posts again",
-                    type=int, default=3600)
+    "instagram_username",
+    help="the Instagram username to monitor for new posts",
+    type=instagram_username,
+)
+parser.add_argument(
+    "discord_webhook_url",
+    help="the Discord webhook URL to send new posts to",
+    type=discord_webhook_url,
+)
+parser.add_argument(
+    "-v", "--verbose", help="increase output verbosity", action="store_true"
+)
+parser.add_argument(
+    "-i",
+    "--refresh-interval",
+    help="time in seconds to wait before checking for new posts again",
+    type=int,
+    default=3600,
+)
 parser.add_argument("--version", action="version", version="%(prog)s 0.0.1")
 args = parser.parse_args()
 
@@ -72,18 +87,20 @@ if args.verbose:
 logger.info("Starting InstaWebhooks...")
 
 try:
-    Profile.from_username(
-        Instaloader().context, args.instagram_username).get_posts()
+    Profile.from_username(Instaloader().context, args.instagram_username).get_posts()
 except LoginRequiredException as exc:
     logger.critical("instaloader: error: %s", exc)
     raise SystemExit(
-        'Not logged into Instaloader.\n  instaloader --login YOUR-USERNAME') from exc
+        "Not logged into Instaloader.\n  instaloader --login YOUR-USERNAME"
+    ) from exc
 
 
 def create_webhook_json(post: Post):
     """Create a Discord embed object from an Instagram post"""
 
-    footer_icon_url = "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
+    footer_icon_url = (
+        "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
+    )
 
     webhook_json = {
         "content": "",
@@ -97,18 +114,13 @@ def create_webhook_json(post: Post):
                 "author": {
                     "name": post.owner_username,
                     "url": "https://www.instagram.com/" + post.owner_username + "/",
-                    "icon_url": post.owner_profile.profile_pic_url
+                    "icon_url": post.owner_profile.profile_pic_url,
                 },
-                "footer": {
-                    "text": "Instagram",
-                    "icon_url": footer_icon_url
-                },
-                "image": {
-                    "url": post.url
-                }
+                "footer": {"text": "Instagram", "icon_url": footer_icon_url},
+                "image": {"url": post.url},
             }
         ],
-        "attachments": []
+        "attachments": [],
     }
 
     return webhook_json
@@ -132,30 +144,36 @@ def send_to_discord(post: Post):
 def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord"""
 
-    logger.debug('Checking for new posts')
+    logger.debug("Checking for new posts")
 
     posts = Profile.from_username(
-        Instaloader().context, args.instagram_username).get_posts()
+        Instaloader().context, args.instagram_username
+    ).get_posts()
 
     since = datetime.now() - timedelta(seconds=args.refresh_interval)
     until = datetime.now()
 
     new_posts_found = False
 
-    for post in takewhile(lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)):
+    for post in takewhile(
+        lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
+    ):
         new_posts_found = True
-        logger.debug('New post found: https://instagram.com/p/%s',
-                     post.shortcode)
+        logger.debug("New post found: https://instagram.com/p/%s", post.shortcode)
         send_to_discord(post)
 
     if not new_posts_found:
-        logger.debug('No new posts found.')
+        logger.debug("No new posts found.")
 
 
 if __name__ == "__main__":
     logger.info("InstaWebhooks started successfully.")
-    logger.info("Monitoring '%s' every %s seconds on ̀%s.",
-                args.instagram_username, args.refresh_interval, args.discord_webhook_url)
+    logger.info(
+        "Monitoring '%s' every %s seconds on ̀%s.",
+        args.instagram_username,
+        args.refresh_interval,
+        args.discord_webhook_url,
+    )
 
     check_for_new_posts()
     sleep(args.refresh_interval)
