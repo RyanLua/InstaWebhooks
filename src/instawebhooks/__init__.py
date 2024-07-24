@@ -77,6 +77,7 @@ if args.verbose:
 # Log the start of the program
 logger.info("Starting InstaWebhooks...")
 
+# Check if we need to sign in to access the Instagram profile
 try:
     Profile.from_username(Instaloader().context, args.instagram_username).get_posts()
 except LoginRequiredException as exc:
