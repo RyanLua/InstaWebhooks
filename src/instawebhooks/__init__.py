@@ -66,6 +66,20 @@ parser.add_argument(
     type=int,
     default=3600,
 )
+parser.add_argument(
+    "-c",
+    "--message-content",
+    help="the message content to send with the webhook",
+    type=str,
+    default="",
+)
+parser.add_argument(
+    "-e",
+    "--show-embed",
+    help="whether to show the post as an embed or not",
+    type=bool,
+    default=True,
+)
 parser.add_argument("--version", action="version", version="%(prog)s 0.1.0")
 args = parser.parse_args()
 
@@ -94,26 +108,32 @@ def create_webhook_json(post: Post):
         "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
     )
 
-    webhook_json = {
-        "content": "",
-        "embeds": [
-            {
-                "title": post.owner_profile.full_name,
-                "description": post.caption,
-                "url": "https://instagram.com/p/" + post.shortcode + "/",
-                "color": 13500529,
-                "timestamp": post.date.strftime("%Y-%m-%dT%H:%M:%S"),
-                "author": {
-                    "name": post.owner_username,
-                    "url": "https://www.instagram.com/" + post.owner_username + "/",
-                    "icon_url": post.owner_profile.profile_pic_url,
-                },
-                "footer": {"text": "Instagram", "icon_url": footer_icon_url},
-                "image": {"url": post.url},
-            }
-        ],
-        "attachments": [],
-    }
+    if args.show_embed is True:
+        webhook_json = {
+            "content": args.message_content,
+            "embeds": [
+                {
+                    "title": post.owner_profile.full_name,
+                    "description": post.caption,
+                    "url": "https://instagram.com/p/" + post.shortcode + "/",
+                    "color": 13500529,
+                    "timestamp": post.date.strftime("%Y-%m-%dT%H:%M:%S"),
+                    "author": {
+                        "name": post.owner_username,
+                        "url": "https://www.instagram.com/" + post.owner_username + "/",
+                        "icon_url": post.owner_profile.profile_pic_url,
+                    },
+                    "footer": {"text": "Instagram", "icon_url": footer_icon_url},
+                    "image": {"url": post.url},
+                }
+            ],
+            "attachments": [],
+        }
+    else:
+        webhook_json = {
+            "content": args.message_content,
+            "attachments": [],
+        }
 
     return webhook_json
 
