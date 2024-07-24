@@ -8,7 +8,6 @@ version = "0.0.2"
 description = "Discord webhooks for new Instagram posts from any profile"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {file = "LICENSE.txt"}
 keywords = ["webhooks", "feed", "embed", "Instagram", "Discord", "CLI"]
 authors = [
   { name="Ryan Luu", email="ryan.luu@ryanluu.dev" },
