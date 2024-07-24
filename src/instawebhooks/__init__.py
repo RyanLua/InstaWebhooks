@@ -4,7 +4,7 @@ Get new Instagram posts from any Instagram profile and send them to Discord usin
 
 import logging
 import re
-from argparse import ArgumentParser, ArgumentTypeError
+from argparse import ArgumentParser
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
@@ -24,7 +24,7 @@ def regex(pattern: str | re.Pattern):
 
     def closure_check_regex(arg_value):
         if not re.match(pattern, arg_value):
-            raise ArgumentTypeError("invalid value")
+            raise ValueError(f"invalid value: '{arg_value}'")
         return arg_value
 
     return closure_check_regex
