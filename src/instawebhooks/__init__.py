@@ -153,6 +153,7 @@ def check_for_new_posts():
         new_posts_found = True
         logger.debug("New post found: https://instagram.com/p/%s", post.shortcode)
         send_to_discord(post)
+        sleep(2)  # Avoid 30 requests per minute rate limit
 
     if not new_posts_found:
         logger.debug("No new posts found.")
