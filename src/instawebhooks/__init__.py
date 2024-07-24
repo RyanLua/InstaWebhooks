@@ -19,26 +19,15 @@ except ModuleNotFoundError as exc:
     ) from exc
 
 
-def instagram_username(arg_value: str):
-    """Instagram username"""
-    pattern = re.compile(r"^[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$")
-    if not pattern.match(arg_value):
-        raise ArgumentTypeError(
-            f"invalid username value: '{arg_value}': must meet Instagram username requirements"
-        )
-    return arg_value
+def regex(pattern: str | re.Pattern):
+    """Argument type for matching a regex pattern"""
 
+    def closure_check_regex(arg_value):
+        if not re.match(pattern, arg_value):
+            raise ArgumentTypeError("invalid value")
+        return arg_value
 
-def discord_webhook_url(arg_value: str):
-    """Discord webhook URL"""
-    pattern = re.compile(
-        r"^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$"
-    )
-    if not pattern.match(arg_value):
-        raise ArgumentTypeError(
-            f"invalid url value: '{arg_value}': must be a valid Discord webhook URL"
-        )
-    return arg_value
+    return closure_check_regex
 
 
 # Set up logging
@@ -58,12 +47,14 @@ parser = ArgumentParser(
 parser.add_argument(
     "instagram_username",
     help="the Instagram username to monitor for new posts",
-    type=instagram_username,
+    type=regex(r"^[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$"),
 )
 parser.add_argument(
     "discord_webhook_url",
     help="the Discord webhook URL to send new posts to",
-    type=discord_webhook_url,
+    type=regex(
+        r"^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$"
+    ),
 )
 parser.add_argument(
     "-v", "--verbose", help="increase output verbosity", action="store_true"
