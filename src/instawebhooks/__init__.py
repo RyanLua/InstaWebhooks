@@ -19,7 +19,7 @@ except ModuleNotFoundError as exc:
     ) from exc
 
 
-def regex(pattern: str | re.Pattern):
+def regex(pattern: str):
     """Argument type for matching a regex pattern"""
 
     def closure_check_regex(arg_value):
