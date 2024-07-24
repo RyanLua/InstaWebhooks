@@ -66,7 +66,7 @@ parser.add_argument(
     type=int,
     default=3600,
 )
-parser.add_argument("--version", action="version", version="%(prog)s 0.0.1")
+parser.add_argument("--version", action="version", version="%(prog)s 0.1.0")
 args = parser.parse_args()
 
 # Set the logger to debug if verbose is enabled
