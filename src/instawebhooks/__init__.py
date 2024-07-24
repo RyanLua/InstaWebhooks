@@ -75,10 +75,9 @@ parser.add_argument(
 )
 parser.add_argument(
     "-e",
-    "--show-embed",
-    help="whether to show the post as an embed or not",
-    type=bool,
-    default=True,
+    "--no-embed",
+    help="don't show the post embed and only send message content",
+    action="store_true",
 )
 parser.add_argument("--version", action="version", version="%(prog)s 0.1.0")
 args = parser.parse_args()
@@ -108,7 +107,12 @@ def create_webhook_json(post: Post):
         "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
     )
 
-    if args.show_embed is True:
+    if args.no_embed:
+        webhook_json = {
+            "content": args.message_content,
+            "attachments": [],
+        }
+    else:
         webhook_json = {
             "content": args.message_content,
             "embeds": [
@@ -127,11 +131,6 @@ def create_webhook_json(post: Post):
                     "image": {"url": post.url},
                 }
             ],
-            "attachments": [],
-        }
-    else:
-        webhook_json = {
-            "content": args.message_content,
             "attachments": [],
         }
 
