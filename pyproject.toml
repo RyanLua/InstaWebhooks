@@ -42,4 +42,4 @@ Discord = "https://discord.gg/wmM64GcZwe"
 Sponsor = "https://github.com/sponsors/RyanLua"
 
 [project.scripts]
-instawebhooks = "instawebhooks:main"
+instawebhooks = "instawebhooks.__main__:main"
