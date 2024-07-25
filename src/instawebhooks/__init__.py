@@ -1,3 +1,5 @@
+"""Initalizer module for pointing towards main module."""
+
 import sys
 
 if __name__ == "__main__":

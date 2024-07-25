@@ -1,3 +1,5 @@
+"""Module for sending new Instagram posts to Discord."""
+
 import logging
 import re
 from argparse import ArgumentParser
