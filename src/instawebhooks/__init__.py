@@ -99,6 +99,13 @@ except LoginRequiredException as exc:
         "Not logged into Instaloader.\n  instaloader --login YOUR-USERNAME"
     ) from exc
 
+# Ensure that a message content is provided if no embed is enabled
+if args.no_embed and args.message_content == "":
+    logger.critical("error: Cannot send an empty message")
+    raise SystemExit(
+        "No message content provided. Please provide a message content with the --message-content flag or an embed by removing the --no-embed flag."
+    )
+
 
 def create_webhook_json(post: Post):
     """Create a Discord embed object from an Instagram post"""
