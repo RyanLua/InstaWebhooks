@@ -101,9 +101,9 @@ except LoginRequiredException as exc:
 
 # Ensure that a message content is provided if no embed is enabled
 if args.no_embed and args.message_content == "":
-    logger.critical("error: Cannot send an empty message")
+    logger.critical("error: Cannot send an empty message. No message content provided.")
     raise SystemExit(
-        "No message content provided. Please provide a message content with the --message-content flag or an embed by removing the --no-embed flag."
+        "Please provide a message content with the --message-content flag."
     )
 
 
@@ -113,13 +113,26 @@ def create_webhook_json(post: Post):
     footer_icon_url = (
         "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
     )
+    placeholders = {
+        "{post_url}": "https://www.instagram.com/" + post.shortcode + "/",
+        "{owner_url}": "https://www.instagram.com/" + post.owner_username + "/",
+        "{owner_name}": post.owner_profile.full_name,
+        "{owner_username}": post.owner_username,
+        "{post_caption}": post.caption,
+        "{post_shortcode}": post.shortcode,
+        "{post_image_url}": post.url,
+    }
 
+    # Replace placeholders in the message content
+    for placeholder, value in placeholders.items():
+        args.message_content = args.message_content.replace(placeholder, value)
+
+    # Create the webhook JSON object
     if args.no_embed:
-        webhook_json = {
-            "content": args.message_content,
-            "attachments": [],
-        }
+        # Send only the message content
+        webhook_json = {"content": args.message_content}
     else:
+        # Send the message content and the post embed
         webhook_json = {
             "content": args.message_content,
             "embeds": [
