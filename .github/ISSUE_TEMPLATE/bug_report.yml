@@ -4,7 +4,7 @@ labels: ["bug"]
 body:
   - type: markdown
     attributes:
-      value: Thanks for taking the time to fill out this bug report! Your issue with be public, so **do not include any personal information**.
+      value: Thanks for taking the time to fill out this bug report! Your issue will be public, so **do not include any personal information**.
   - type: textarea
     id: description
     attributes:
@@ -38,15 +38,13 @@ body:
     attributes:
       label: Other details
       description: Is there anything else we should know or have?
-      placeholder: The bug is able to be only reproduced able this percent of the time
+      placeholder: The bug can only be reproduced this percent of the time
   - type: input
     id: version
     attributes:
       label: Version
       description: What version are you running? (Use `instawebhooks --version` to see your version)
       placeholder: 0.1.0
-    validations:
-      required: true
   - type: dropdown
     id: platform
     attributes:
