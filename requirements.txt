@@ -3,4 +3,5 @@ charset-normalizer==3.3.2
 idna==3.7
 instaloader==4.12
 requests==2.32.3
+types-requests==2.32.0.20240712
 urllib3==2.2.2
