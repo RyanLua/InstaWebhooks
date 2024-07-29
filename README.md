@@ -12,4 +12,4 @@ Monitor Instagram accounts for new posts and send them to a Discord webhook.
 * Customizable **Discord embeds** for new posts and message contents including **mentions/pings**
 * **User-definable refresh interval** for checking for new posts the second they are posted
 
-<img alt="Example of a new post notification" src="assets/ScreenshotEmbedExample.png" height="512px" />
+<img alt="Example of a new post notification" src="assets/ScreenshotEmbedExample.png" width="512px" />
