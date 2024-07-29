@@ -1,13 +1,8 @@
-<div align="center">
-	<img alt="InstaWebhooks" src="assets/Logo.svg" width="128px" />
-	<h1>InstaWebhooks</h1>
-</div>
+<img alt="InstaWebhooks" src="assets/Logo.svg" width="64px" />
 
-<div align="center">
+# InstaWebhooks
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/RyanLua/InstaWebhooks?quickstart=1)
-
-</div>
+[![Continuous Integration](https://github.com/RyanLua/InstaWebhooks/actions/workflows/ci.yml/badge.svg)](https://github.com/RyanLua/InstaWebhooks/actions/workflows/ci.yml) [![PyPI - Version](https://img.shields.io/pypi/v/instawebhooks)](https://pypi.org/project/instawebhooks/#history) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/instawebhooks)](https://pypi.org/project/instawebhooks/) [![GitHub License](https://img.shields.io/github/license/RyanLua/InstaWebhooks)](https://github.com/RyanLua/InstaWebhooks/blob/main/LICENSE.txt) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 > [InstaWebhooks Documentation](https://github.com/RyanLua/InstaWebhooks/wiki)
 
