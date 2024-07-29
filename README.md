@@ -26,10 +26,10 @@ Internally, InstaWebhooks uses [Instaloader](https://instaloader.github.io/) to 
 Below, InstaWebhooks is monitoring the Instagram account [`raenlua`](https://www.instagram.com/raenlua/) for new posts and sending them to a Discord webhook every 30 minutes and sends a message to Discord with the post URL and the owner's name.
 
 ```console
-$ instawebhooks -i 1800 -c "New post from {owner_name}: {post_url}" raenlua https://discord.com/api/webhooks/1256506980734992447/GnM79-OWCDQ935_hPp6zY0DCHopS8uBWTgjgEI9OTrXZFqayDcfiMYo_CvhYPWvDtB3h
+$ instawebhooks -i 1800 -c "New post from {owner_name}: {post_url}" raenlua https://discord.com/api/webhooks/0123456789/abcdefghijklmnopqrstuvwxyz
 07/29/2024 10:02:10 PM - INFO - Starting InstaWebhooks...
 07/29/2024 10:02:14 PM - INFO - InstaWebhooks started successfully.
-07/29/2024 10:02:14 PM - INFO - Monitoring 'raenlua' every 1800 seconds on ̀https://discord.com/api/webhooks/1256506980734992447/GnM79-OWCDQ935_hPp6zY0DCHopS8uBWTgjgEI9OTrXZFqayDcfiMYo_CvhYPWvDtB3h.
+07/29/2024 10:02:14 PM - INFO - Monitoring 'raenlua' every 1800 seconds on https://discord.com/api/webhooks/0123456789/abcdefghijklmnopqrstuvwxyz.
 07/29/2024 10:02:18 PM - INFO - New post sent to Discord successfully.
 ```
 
