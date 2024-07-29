@@ -2,7 +2,8 @@
 
 # InstaWebhooks
 
-[![Continuous Integration](https://github.com/RyanLua/InstaWebhooks/actions/workflows/ci.yml/badge.svg)](https://github.com/RyanLua/InstaWebhooks/actions/workflows/ci.yml) [![PyPI - Version](https://img.shields.io/pypi/v/instawebhooks)](https://pypi.org/project/instawebhooks/#history) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/instawebhooks)](https://pypi.org/project/instawebhooks/) [![GitHub License](https://img.shields.io/github/license/RyanLua/InstaWebhooks)](https://github.com/RyanLua/InstaWebhooks/blob/main/LICENSE.txt) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Continuous Integration](https://github.com/RyanLua/InstaWebhooks/actions/workflows/ci.yml/badge.svg)](https://github.com/RyanLua/InstaWebhooks/actions/workflows/ci.yml) [![PyPI - Version](https://img.shields.io/pypi/v/instawebhooks)](https://pypi.org/project/instawebhooks/#history) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/instawebhooks)](https://pypi.org/project/instawebhooks/) [![GitHub License](https://img.shields.io/github/license/RyanLua/InstaWebhooks)](https://github.com/RyanLua/InstaWebhooks/blob/main/LICENSE.txt) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+
 
 > [InstaWebhooks Documentation](https://github.com/RyanLua/InstaWebhooks/wiki)
 
