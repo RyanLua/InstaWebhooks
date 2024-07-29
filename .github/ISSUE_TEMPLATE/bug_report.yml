@@ -1,5 +1,5 @@
 name: Report a bug
-description: File a bug report.
+description: Something is not working correctly.
 labels: ["bug"]
 body:
   - type: markdown
@@ -42,9 +42,15 @@ body:
   - type: input
     id: version
     attributes:
-      label: Version
+      label: InstaWebhooks version
       description: What version are you running? (Use `instawebhooks --version` to see your version)
       placeholder: 0.1.0
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version
+      description: What version are you running? (Use `python -v` to see your version)
+      placeholder: 3.8.0b2+
   - type: dropdown
     id: platform
     attributes:
