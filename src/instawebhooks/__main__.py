@@ -2,6 +2,7 @@
 
 import logging
 import re
+import sys
 from argparse import ArgumentParser
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
@@ -91,6 +92,9 @@ logger.info("Starting InstaWebhooks...")
 # Check if we need to sign in to access the Instagram profile
 try:
     Profile.from_username(Instaloader().context, args.instagram_username).get_posts()
+except KeyboardInterrupt:
+    print("\nInterrupted by user.")
+    sys.exit(0)
 except LoginRequiredException as exc:
     logger.critical("instaloader: error: %s", exc)
     raise SystemExit(
@@ -206,6 +210,10 @@ def main():
         args.discord_webhook_url,
     )
 
-    while True:
-        check_for_new_posts()
-        sleep(args.refresh_interval)
+    try:
+        while True:
+            check_for_new_posts()
+            sleep(args.refresh_interval)
+    except KeyboardInterrupt:
+        print("\nInterrupted by user.")
+        sys.exit(0)
