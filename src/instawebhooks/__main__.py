@@ -116,7 +116,7 @@ def create_webhook_json(post: Post):
         "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
     )
     placeholders = {
-        "{post_url}": "https://www.instagram.com/" + post.shortcode + "/",
+        "{post_url}": "https://www.instagram.com/p/" + post.shortcode + "/",
         "{owner_url}": "https://www.instagram.com/" + post.owner_username + "/",
         "{owner_name}": post.owner_profile.full_name,
         "{owner_username}": post.owner_username,
@@ -141,7 +141,7 @@ def create_webhook_json(post: Post):
                 {
                     "title": post.owner_profile.full_name,
                     "description": post.caption,
-                    "url": "https://instagram.com/p/" + post.shortcode + "/",
+                    "url": "https://www.instagram.com/p/" + post.shortcode + "/",
                     "color": 13500529,
                     "timestamp": post.date.strftime("%Y-%m-%dT%H:%M:%S"),
                     "author": {
@@ -192,7 +192,7 @@ def check_for_new_posts():
         lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
     ):
         new_posts_found = True
-        logger.debug("New post found: https://instagram.com/p/%s", post.shortcode)
+        logger.debug("New post found: https://www.instagram.com/p/%s", post.shortcode)
         send_to_discord(post)
         sleep(2)  # Avoid 30 requests per minute rate limit
 
