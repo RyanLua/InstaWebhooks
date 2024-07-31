@@ -9,9 +9,14 @@ from itertools import dropwhile, takewhile
 from time import sleep
 
 try:
-    import requests
+    from discord import Embed, SyncWebhook
+except ModuleNotFoundError as exc:
+    raise SystemExit(
+        "Discord.py not found.\n  pip install [--user] discord.py"
+    ) from exc
+
+try:
     from instaloader import Instaloader, LoginRequiredException, Post, Profile
-    from requests.exceptions import HTTPError
 except ModuleNotFoundError as exc:
     raise SystemExit(
         "Instaloader not found.\n  pip install [--user] instaloader"
@@ -109,15 +114,41 @@ if args.no_embed and args.message_content == "":
     )
 
 
-def create_webhook_json(post: Post):
+def create_embed(post: Post):
     """Create a Discord embed object from an Instagram post"""
+
+    logger.debug("Creating post embed...")
 
     footer_icon_url = (
         "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
     )
+
+    embed = Embed(
+        color=13500529,
+        title=post.owner_profile.full_name,
+        description=post.caption,
+        url=f"https://www.instagram.com/p/{post.shortcode}/",
+        timestamp=post.date,
+    )
+    embed.set_author(
+        name=post.owner_username,
+        url=f"https://www.instagram.com/{post.owner_username}/",
+        icon_url=post.owner_profile.profile_pic_url,
+    )
+    embed.set_footer(text="Instagram", icon_url=footer_icon_url)
+    embed.set_image(url=post.url)
+
+    return embed
+
+
+def format_message(post: Post):
+    """Format the message content with placeholders"""
+
+    logger.debug("Formatting message for placeholders...")
+
     placeholders = {
-        "{post_url}": "https://www.instagram.com/p/" + post.shortcode + "/",
-        "{owner_url}": "https://www.instagram.com/" + post.owner_username + "/",
+        "{post_url}": f"https://www.instagram.com/p/{post.shortcode}/",
+        "{owner_url}": f"https://www.instagram.com/{post.owner_username}/",
         "{owner_name}": post.owner_profile.full_name,
         "{owner_username}": post.owner_username,
         "{post_caption}": post.caption,
@@ -129,49 +160,24 @@ def create_webhook_json(post: Post):
     for placeholder, value in placeholders.items():
         args.message_content = args.message_content.replace(placeholder, value)
 
-    # Create the webhook JSON object
-    if args.no_embed:
-        # Send only the message content
-        webhook_json = {"content": args.message_content}
-    else:
-        # Send the message content and the post embed
-        webhook_json = {
-            "content": args.message_content,
-            "embeds": [
-                {
-                    "title": post.owner_profile.full_name,
-                    "description": post.caption,
-                    "url": "https://www.instagram.com/p/" + post.shortcode + "/",
-                    "color": 13500529,
-                    "timestamp": post.date.strftime("%Y-%m-%dT%H:%M:%S"),
-                    "author": {
-                        "name": post.owner_username,
-                        "url": "https://www.instagram.com/" + post.owner_username + "/",
-                        "icon_url": post.owner_profile.profile_pic_url,
-                    },
-                    "footer": {"text": "Instagram", "icon_url": footer_icon_url},
-                    "image": {"url": post.url},
-                }
-            ],
-            "attachments": [],
-        }
-
-    return webhook_json
-
 
 def send_to_discord(post: Post):
     """Send a new Instagram post to Discord using a webhook"""
 
-    payload = create_webhook_json(post)
+    webhook = SyncWebhook.from_url(args.discord_webhook_url)
 
-    try:
-        logger.debug("Sending post sent to Discord")
-        r = requests.post(args.discord_webhook_url, json=payload, timeout=10)
-        r.raise_for_status()
-    except HTTPError as http_error:
-        logger.error("HTTP error occurred: %s", http_error)
+    if args.message_content:
+        format_message(post)
+
+    logger.debug("Sending post sent to Discord")
+
+    if not args.no_embed:
+        embed = create_embed(post)
+        webhook.send(content=args.message_content, embed=embed)
     else:
-        logger.info("New post sent to Discord successfully.")
+        webhook.send(content=args.message_content)
+
+    logger.info("New post sent to Discord successfully.")
 
 
 def check_for_new_posts():
