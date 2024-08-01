@@ -139,11 +139,14 @@ async def create_embed(post: Post):
     profile_pic_file = File(io.BytesIO(profile_pic_bytes), "profile_pic.webp")
 
     # Replace hashtags with clickable links
-    post_caption = re.sub(
-        r"#([a-zA-Z0-9]+\b)",
-        r"[#\1](https://www.instagram.com/explore/tags/\1)",
-        post.caption,
-    )
+    if post.caption is None:
+        post_caption = ""
+    else:
+        post_caption = re.sub(
+            r"#([a-zA-Z0-9]+\b)",
+            r"[#\1](https://www.instagram.com/explore/tags/\1)",
+            post.caption,
+        )
 
     embed = Embed(
         color=13500529,
