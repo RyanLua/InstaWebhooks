@@ -1,5 +1,7 @@
 """Module for sending new Instagram posts to Discord."""
 
+import asyncio
+import io
 import logging
 import re
 import sys
@@ -8,8 +10,10 @@ from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
 
+from aiohttp import ClientSession
+
 try:
-    from discord import Embed, SyncWebhook
+    from discord import Embed, File, SyncWebhook
 except ModuleNotFoundError as exc:
     raise SystemExit(
         "Discord.py not found.\n  pip install [--user] discord.py"
@@ -114,7 +118,7 @@ if args.no_embed and args.message_content == "":
     )
 
 
-def create_embed(post: Post):
+async def create_embed(post: Post):
     """Create a Discord embed object from an Instagram post"""
 
     logger.debug("Creating post embed...")
@@ -122,6 +126,17 @@ def create_embed(post: Post):
     footer_icon_url = (
         "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
     )
+
+    # Download the post image and profile picture
+    async with ClientSession() as cs:
+        async with cs.get(post.url) as res:
+            post_image_bytes = await res.read()
+
+        async with cs.get(post.owner_profile.profile_pic_url) as res:
+            profile_pic_bytes = await res.read()
+
+    post_image_file = File(io.BytesIO(post_image_bytes), "post_image.webp")
+    profile_pic_file = File(io.BytesIO(profile_pic_bytes), "profile_pic.webp")
 
     embed = Embed(
         color=13500529,
@@ -133,12 +148,12 @@ def create_embed(post: Post):
     embed.set_author(
         name=post.owner_username,
         url=f"https://www.instagram.com/{post.owner_username}/",
-        icon_url=post.owner_profile.profile_pic_url,
+        icon_url="attachment://profile_pic.webp",
     )
     embed.set_footer(text="Instagram", icon_url=footer_icon_url)
-    embed.set_image(url=post.url)
+    embed.set_image(url="attachment://post_image.webp")
 
-    return embed
+    return embed, post_image_file, profile_pic_file
 
 
 def format_message(post: Post):
@@ -161,7 +176,7 @@ def format_message(post: Post):
         args.message_content = args.message_content.replace(placeholder, value)
 
 
-def send_to_discord(post: Post):
+async def send_to_discord(post: Post):
     """Send a new Instagram post to Discord using a webhook"""
 
     webhook = SyncWebhook.from_url(args.discord_webhook_url)
@@ -172,15 +187,19 @@ def send_to_discord(post: Post):
     logger.debug("Sending post sent to Discord")
 
     if not args.no_embed:
-        embed = create_embed(post)
-        webhook.send(content=args.message_content, embed=embed)
+        embed, post_image_file, profile_pic_file = await create_embed(post)
+        webhook.send(
+            content=args.message_content,
+            embed=embed,
+            files=[post_image_file, profile_pic_file],
+        )
     else:
         webhook.send(content=args.message_content)
 
     logger.info("New post sent to Discord successfully.")
 
 
-def check_for_new_posts():
+async def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord"""
 
     logger.debug("Checking for new posts")
@@ -194,13 +213,11 @@ def check_for_new_posts():
 
     new_posts_found = False
 
-    for post in takewhile(
-        lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
-    ):
+    for post in posts:
         new_posts_found = True
         logger.debug("New post found: https://www.instagram.com/p/%s", post.shortcode)
-        send_to_discord(post)
-        sleep(2)  # Avoid 30 requests per minute rate limit
+        await send_to_discord(post)
+        sleep(20)  # Avoid 30 requests per minute rate limit
 
     if not new_posts_found:
         logger.debug("No new posts found.")
@@ -218,7 +235,7 @@ def main():
 
     try:
         while True:
-            check_for_new_posts()
+            asyncio.run(check_for_new_posts())
             sleep(args.refresh_interval)
     except KeyboardInterrupt:
         print("\nInterrupted by user.")
