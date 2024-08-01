@@ -138,10 +138,17 @@ async def create_embed(post: Post):
     post_image_file = File(io.BytesIO(post_image_bytes), "post_image.webp")
     profile_pic_file = File(io.BytesIO(profile_pic_bytes), "profile_pic.webp")
 
+    # Replace hashtags with clickable links
+    post_caption = re.sub(
+        r"#([a-zA-Z0-9]+\b)",
+        r"[#\1](https://www.instagram.com/explore/tags/\1)",
+        post.caption,
+    )
+
     embed = Embed(
         color=13500529,
         title=post.owner_profile.full_name,
-        description=post.caption,
+        description=post_caption,
         url=f"https://www.instagram.com/p/{post.shortcode}/",
         timestamp=post.date,
     )
@@ -213,13 +220,11 @@ async def check_for_new_posts():
 
     new_posts_found = False
 
-    for post in takewhile(
-        lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
-    ):
+    for post in posts:
         new_posts_found = True
         logger.debug("New post found: https://www.instagram.com/p/%s", post.shortcode)
         await send_to_discord(post)
-        sleep(2)  # Avoid 30 requests per minute rate limit
+        sleep(20)  # Avoid 30 requests per minute rate limit
 
     if not new_posts_found:
         logger.debug("No new posts found.")
