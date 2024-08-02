@@ -1,5 +1,7 @@
 """Module for sending new Instagram posts to Discord."""
 
+import asyncio
+import io
 import logging
 import re
 import sys
@@ -9,9 +11,19 @@ from itertools import dropwhile, takewhile
 from time import sleep
 
 try:
-    import requests
+    from aiohttp import ClientSession
+except ModuleNotFoundError as exc:
+    raise SystemExit("Aiohttp not found.\n  pip install [--user] aiohttp") from exc
+
+try:
+    from discord import Embed, File, SyncWebhook
+except ModuleNotFoundError as exc:
+    raise SystemExit(
+        "Discord.py not found.\n  pip install [--user] discord.py"
+    ) from exc
+
+try:
     from instaloader import Instaloader, LoginRequiredException, Post, Profile
-    from requests.exceptions import HTTPError
 except ModuleNotFoundError as exc:
     raise SystemExit(
         "Instaloader not found.\n  pip install [--user] instaloader"
@@ -109,15 +121,62 @@ if args.no_embed and args.message_content == "":
     )
 
 
-def create_webhook_json(post: Post):
+async def create_embed(post: Post):
     """Create a Discord embed object from an Instagram post"""
+
+    logger.debug("Creating post embed...")
 
     footer_icon_url = (
         "https://www.instagram.com/static/images/ico/favicon-192.png/68d99ba29cc8.png"
     )
+
+    # Download the post image and profile picture
+    async with ClientSession() as cs:
+        async with cs.get(post.url) as res:
+            post_image_bytes = await res.read()
+
+        async with cs.get(post.owner_profile.profile_pic_url) as res:
+            profile_pic_bytes = await res.read()
+
+    post_image_file = File(io.BytesIO(post_image_bytes), "post_image.webp")
+    profile_pic_file = File(io.BytesIO(profile_pic_bytes), "profile_pic.webp")
+
+    # Replace hashtags with clickable links
+    if post.caption is None:
+        post_caption = ""
+    else:
+        post_caption = re.sub(
+            r"#([a-zA-Z0-9]+\b)",
+            r"[#\1](https://www.instagram.com/explore/tags/\1)",
+            post.caption,
+        )
+
+    embed = Embed(
+        color=13500529,
+        title=post.owner_profile.full_name,
+        description=post_caption,
+        url=f"https://www.instagram.com/p/{post.shortcode}/",
+        timestamp=post.date,
+    )
+    embed.set_author(
+        name=post.owner_username,
+        url=f"https://www.instagram.com/{post.owner_username}/",
+        icon_url="attachment://profile_pic.webp",
+    )
+    embed.set_footer(text="Instagram", icon_url=footer_icon_url)
+    embed.set_image(url="attachment://post_image.webp")
+
+    return embed, post_image_file, profile_pic_file
+
+
+def format_message(post: Post):
+    """Format the message content with placeholders"""
+
+    logger.debug("Formatting message for placeholders...")
+
     placeholders = {
-        "{post_url}": "https://www.instagram.com/p/" + post.shortcode + "/",
-        "{owner_url}": "https://www.instagram.com/" + post.owner_username + "/",
+        "{post_url}": f"https://www.instagram.com/p/{post.shortcode}/",
+        "{owner_url}": f"https://www.instagram.com/{post.owner_username}/",
         "{owner_name}": post.owner_profile.full_name,
         "{owner_username}": post.owner_username,
         "{post_caption}": post.caption,
@@ -129,52 +188,31 @@ def create_webhook_json(post: Post):
     for placeholder, value in placeholders.items():
         args.message_content = args.message_content.replace(placeholder, value)
 
-    # Create the webhook JSON object
-    if args.no_embed:
-        # Send only the message content
-        webhook_json = {"content": args.message_content}
-    else:
-        # Send the message content and the post embed
-        webhook_json = {
-            "content": args.message_content,
-            "embeds": [
-                {
-                    "title": post.owner_profile.full_name,
-                    "description": post.caption,
-                    "url": "https://www.instagram.com/p/" + post.shortcode + "/",
-                    "color": 13500529,
-                    "timestamp": post.date.strftime("%Y-%m-%dT%H:%M:%S"),
-                    "author": {
-                        "name": post.owner_username,
-                        "url": "https://www.instagram.com/" + post.owner_username + "/",
-                        "icon_url": post.owner_profile.profile_pic_url,
-                    },
-                    "footer": {"text": "Instagram", "icon_url": footer_icon_url},
-                    "image": {"url": post.url},
-                }
-            ],
-            "attachments": [],
-        }
 
-    return webhook_json
-
-
-def send_to_discord(post: Post):
+async def send_to_discord(post: Post):
     """Send a new Instagram post to Discord using a webhook"""
 
-    payload = create_webhook_json(post)
+    webhook = SyncWebhook.from_url(args.discord_webhook_url)
 
-    try:
-        logger.debug("Sending post sent to Discord")
-        r = requests.post(args.discord_webhook_url, json=payload, timeout=10)
-        r.raise_for_status()
-    except HTTPError as http_error:
-        logger.error("HTTP error occurred: %s", http_error)
+    if args.message_content:
+        format_message(post)
+
+    logger.debug("Sending post sent to Discord")
+
+    if not args.no_embed:
+        embed, post_image_file, profile_pic_file = await create_embed(post)
+        webhook.send(
+            content=args.message_content,
+            embed=embed,
+            files=[post_image_file, profile_pic_file],
+        )
     else:
-        logger.info("New post sent to Discord successfully.")
+        webhook.send(content=args.message_content)
+
+    logger.info("New post sent to Discord successfully.")
 
 
-def check_for_new_posts():
+async def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord"""
 
     logger.debug("Checking for new posts")
@@ -193,7 +231,7 @@ def check_for_new_posts():
     ):
         new_posts_found = True
         logger.debug("New post found: https://www.instagram.com/p/%s", post.shortcode)
-        send_to_discord(post)
+        await send_to_discord(post)
         sleep(2)  # Avoid 30 requests per minute rate limit
 
     if not new_posts_found:
@@ -212,7 +250,7 @@ def main():
 
     try:
         while True:
-            check_for_new_posts()
+            asyncio.run(check_for_new_posts())
             sleep(args.refresh_interval)
     except KeyboardInterrupt:
         print("\nInterrupted by user.")
