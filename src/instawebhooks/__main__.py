@@ -10,7 +10,10 @@ from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
 
-from aiohttp import ClientSession
+try:
+    from aiohttp import ClientSession
+except ModuleNotFoundError as exc:
+    raise SystemExit("Aiohttp not found.\n  pip install [--user] aiohttp") from exc
 
 try:
     from discord import Embed, File, SyncWebhook
