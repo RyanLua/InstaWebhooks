@@ -1,11 +1,6 @@
 name: Continuous Integration
 
 on:
-  pull_request:
-    paths:
-      - '**.py'
-      - '.github/workflows/ci.yml'
-
   push:
     paths:
       - '**.py'
