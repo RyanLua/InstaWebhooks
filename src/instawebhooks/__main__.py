@@ -90,7 +90,7 @@ parser.add_argument(
     help="don't show the post embed and only send message content",
     action="store_true",
 )
-parser.add_argument("--version", action="version", version="%(prog)s 0.1.0")
+parser.add_argument("--version", action="version", version="%(prog)s 0.1.1")
 args = parser.parse_args()
 
 # Set the logger to debug if verbose is enabled
