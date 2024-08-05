@@ -9,6 +9,7 @@ from argparse import ArgumentParser
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
+import importlib.metadata
 
 try:
     from aiohttp import ClientSession
@@ -40,6 +41,8 @@ def regex(pattern: str):
 
     return closure_check_regex
 
+
+version = importlib.metadata.version("instawebhooks")
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -90,7 +93,7 @@ parser.add_argument(
     help="don't show the post embed and only send message content",
     action="store_true",
 )
-parser.add_argument("--version", action="version", version="%(prog)s 0.1.1")
+parser.add_argument("--version", action="version", version="%(prog)s " + version)
 args = parser.parse_args()
 
 # Set the logger to debug if verbose is enabled
