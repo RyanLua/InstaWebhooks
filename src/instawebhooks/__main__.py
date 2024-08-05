@@ -215,7 +215,7 @@ async def send_to_discord(post: Post):
 async def check_for_new_posts():
     """Check for new Instagram posts and send them to Discord"""
 
-    logger.debug("Checking for new posts")
+    logger.info("Checking for new posts")
 
     posts = Profile.from_username(
         Instaloader().context, args.instagram_username
