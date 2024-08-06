@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "instawebhooks"
-version = "0.1.1"
+version = "0.1.2"
 description = "Discord webhooks for new Instagram posts from any profile"
 readme = "README.md"
 requires-python = ">=3.8"
