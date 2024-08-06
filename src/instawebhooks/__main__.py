@@ -224,8 +224,8 @@ async def check_for_new_posts():
         Instaloader().context, args.instagram_username
     ).get_posts()
 
-    since = datetime.now() - timedelta(seconds=args.refresh_interval)
-    until = datetime.now()
+    since = datetime.now()
+    until = datetime.now() - timedelta(seconds=args.refresh_interval)
 
     new_posts_found = False
 
