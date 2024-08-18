@@ -14,8 +14,7 @@ import importlib.metadata
 try:
     from aiohttp import ClientSession
 except ModuleNotFoundError as exc:
-    raise SystemExit(
-        "Aiohttp not found.\n  pip install [--user] aiohttp") from exc
+    raise SystemExit("Aiohttp not found.\n  pip install [--user] aiohttp") from exc
 
 try:
     from discord import Embed, File, SyncWebhook
@@ -94,8 +93,7 @@ parser.add_argument(
     help="don't show the post embed and only send message content",
     action="store_true",
 )
-parser.add_argument("--version", action="version",
-                    version="%(prog)s " + version)
+parser.add_argument("--version", action="version", version="%(prog)s " + version)
 args = parser.parse_args()
 
 # Set the logger to debug if verbose is enabled
@@ -108,8 +106,7 @@ logger.info("Starting InstaWebhooks...")
 
 # Ensure that a message content is provided if no embed is enabled
 if args.no_embed and args.message_content == "":
-    logger.critical(
-        "error: Cannot send an empty message. No message content provided.")
+    logger.critical("error: Cannot send an empty message. No message content provided.")
     raise SystemExit(
         "Please provide a message content with the --message-content flag."
     )
@@ -224,8 +221,7 @@ async def check_for_new_posts():
         lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
     ):
         new_posts_found = True
-        logger.debug(
-            "New post found: https://www.instagram.com/p/%s", post.shortcode)
+        logger.debug("New post found: https://www.instagram.com/p/%s", post.shortcode)
         await send_to_discord(post)
         sleep(2)  # Avoid 30 requests per minute rate limit
 
