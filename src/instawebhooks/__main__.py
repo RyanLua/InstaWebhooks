@@ -14,7 +14,8 @@ import importlib.metadata
 try:
     from aiohttp import ClientSession
 except ModuleNotFoundError as exc:
-    raise SystemExit("Aiohttp not found.\n  pip install [--user] aiohttp") from exc
+    raise SystemExit(
+        "Aiohttp not found.\n  pip install [--user] aiohttp") from exc
 
 try:
     from discord import Embed, File, SyncWebhook
@@ -93,7 +94,8 @@ parser.add_argument(
     help="don't show the post embed and only send message content",
     action="store_true",
 )
-parser.add_argument("--version", action="version", version="%(prog)s " + version)
+parser.add_argument("--version", action="version",
+                    version="%(prog)s " + version)
 args = parser.parse_args()
 
 # Set the logger to debug if verbose is enabled
@@ -104,21 +106,10 @@ if args.verbose:
 # Log the start of the program
 logger.info("Starting InstaWebhooks...")
 
-# Check if we need to sign in to access the Instagram profile
-try:
-    Profile.from_username(Instaloader().context, args.instagram_username).get_posts()
-except KeyboardInterrupt:
-    print("\nInterrupted by user.")
-    sys.exit(0)
-except LoginRequiredException as exc:
-    logger.critical("instaloader: error: %s", exc)
-    raise SystemExit(
-        "Not logged into Instaloader.\n  instaloader --login YOUR-USERNAME"
-    ) from exc
-
 # Ensure that a message content is provided if no embed is enabled
 if args.no_embed and args.message_content == "":
-    logger.critical("error: Cannot send an empty message. No message content provided.")
+    logger.critical(
+        "error: Cannot send an empty message. No message content provided.")
     raise SystemExit(
         "Please provide a message content with the --message-content flag."
     )
@@ -233,7 +224,8 @@ async def check_for_new_posts():
         lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
     ):
         new_posts_found = True
-        logger.debug("New post found: https://www.instagram.com/p/%s", post.shortcode)
+        logger.debug(
+            "New post found: https://www.instagram.com/p/%s", post.shortcode)
         await send_to_discord(post)
         sleep(2)  # Avoid 30 requests per minute rate limit
 
@@ -255,6 +247,11 @@ def main():
         while True:
             asyncio.run(check_for_new_posts())
             sleep(args.refresh_interval)
+    except LoginRequiredException as login_exc:
+        logger.critical("instaloader: error: %s", login_exc)
+        raise SystemExit(
+            "Not logged into Instaloader.\n  instaloader --login YOUR-USERNAME"
+        ) from login_exc
     except KeyboardInterrupt:
         print("\nInterrupted by user.")
         sys.exit(0)
