@@ -58,6 +58,7 @@ parser = ArgumentParser(
     description="Monitor Instagram accounts for new posts and send them to a Discord webhook",
     epilog="https://github.com/RaenLua/InstaWebhooks",
 )
+group = parser.add_mutually_exclusive_group()
 parser.add_argument(
     "instagram_username",
     help="the Instagram username to monitor for new posts",
@@ -70,9 +71,8 @@ parser.add_argument(
         r"^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$"
     ),
 )
-parser.add_argument(
-    "-v", "--verbose", help="increase output verbosity", action="store_true"
-)
+group.add_argument("-q", "--quiet", help="hide all logging", action="store_true")
+group.add_argument("-v", "--verbose", help="show debug logging", action="store_true")
 parser.add_argument(
     "-i",
     "--refresh-interval",
@@ -97,9 +97,14 @@ parser.add_argument("--version", action="version", version="%(prog)s " + version
 args = parser.parse_args()
 
 # Set the logger to debug if verbose is enabled
-if args.verbose:
+if args.quiet:
+    logger.setLevel(logging.CRITICAL)
+    logger.debug("Quiet output enabled.")
+elif args.verbose:
     logger.setLevel(logging.DEBUG)
     logger.debug("Verbose output enabled.")
+else:
+    logger.setLevel(logging.INFO)
 
 # Log the start of the program
 logger.info("Starting InstaWebhooks...")
