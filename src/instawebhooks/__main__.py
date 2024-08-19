@@ -200,7 +200,7 @@ async def send_to_discord(post: Post):
     if args.message_content:
         format_message(post)
 
-    logger.debug("Sending post sent to Discord")
+    logger.debug("Sending post sent to Discord...")
 
     if not args.no_embed:
         embed, post_image_file, profile_pic_file = await create_embed(post)
@@ -233,12 +233,12 @@ async def check_for_new_posts():
         lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
     ):
         new_posts_found = True
-        logger.debug("New post found: https://www.instagram.com/p/%s", post.shortcode)
+        logger.info("New post found: https://www.instagram.com/p/%s", post.shortcode)
         await send_to_discord(post)
         sleep(2)  # Avoid 30 requests per minute rate limit
 
     if not new_posts_found:
-        logger.debug("No new posts found.")
+        logger.info("No new posts found.")
 
 
 def main():
