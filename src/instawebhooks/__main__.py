@@ -104,18 +104,6 @@ if args.verbose:
 # Log the start of the program
 logger.info("Starting InstaWebhooks...")
 
-# Check if we need to sign in to access the Instagram profile
-try:
-    Profile.from_username(Instaloader().context, args.instagram_username).get_posts()
-except KeyboardInterrupt:
-    print("\nInterrupted by user.")
-    sys.exit(0)
-except LoginRequiredException as exc:
-    logger.critical("instaloader: error: %s", exc)
-    raise SystemExit(
-        "Not logged into Instaloader.\n  instaloader --login YOUR-USERNAME"
-    ) from exc
-
 # Ensure that a message content is provided if no embed is enabled
 if args.no_embed and args.message_content == "":
     logger.critical("error: Cannot send an empty message. No message content provided.")
@@ -255,6 +243,11 @@ def main():
         while True:
             asyncio.run(check_for_new_posts())
             sleep(args.refresh_interval)
+    except LoginRequiredException as login_exc:
+        logger.critical("instaloader: error: %s", login_exc)
+        raise SystemExit(
+            "Not logged into Instaloader.\n  instaloader --login YOUR-USERNAME"
+        ) from login_exc
     except KeyboardInterrupt:
         print("\nInterrupted by user.")
         sys.exit(0)
