@@ -145,18 +145,17 @@ async def create_embed(post: Post):
     profile_pic_file = File(io.BytesIO(profile_pic_bytes), "profile_pic.webp")
 
     # Format the post caption with clickable links for mentions and hashtags
-    post_caption = post.caption
-    if post_caption is str:
-        post_caption = re.sub(
-            r"#([a-zA-Z0-9]+\b)",
-            r"[#\1](https://www.instagram.com/explore/tags/\1)",
-            post_caption,
-        )
-        post_caption = re.sub(
-            r"@([a-zA-Z0-9_]+\b)",
-            r"[@\1](https://www.instagram.com/\1)",
-            post_caption,
-        )
+    post_caption = post.caption or ""
+    post_caption = re.sub(
+        r"#([a-zA-Z0-9]+\b)",
+        r"[#\1](https://www.instagram.com/explore/tags/\1)",
+        post_caption,
+    )
+    post_caption = re.sub(
+        r"@([a-zA-Z0-9_]+\b)",
+        r"[@\1](https://www.instagram.com/\1)",
+        post_caption,
+    )
 
     embed = Embed(
         color=13500529,
