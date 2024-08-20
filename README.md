@@ -1,4 +1,4 @@
-<img alt="InstaWebhooks" src="https://raw.githubusercontent.com/RyanLua/InstaWebhooks/main/assets/Logo.svg" width="64px" />
+<img alt="InstaWebhooks" src="https://raw.githubusercontent.com/RyanLua/InstaWebhooks/main/assets/Logo.png" width="64px" />
 
 # InstaWebhooks - Discord webhooks for Instagram
 
