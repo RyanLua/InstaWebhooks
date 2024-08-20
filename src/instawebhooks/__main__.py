@@ -58,6 +58,7 @@ parser = ArgumentParser(
     description="Monitor Instagram accounts for new posts and send them to a Discord webhook",
     epilog="https://github.com/RaenLua/InstaWebhooks",
 )
+group = parser.add_mutually_exclusive_group()
 parser.add_argument(
     "instagram_username",
     help="the Instagram username to monitor for new posts",
@@ -70,9 +71,8 @@ parser.add_argument(
         r"^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$"
     ),
 )
-parser.add_argument(
-    "-v", "--verbose", help="increase output verbosity", action="store_true"
-)
+group.add_argument("-q", "--quiet", help="hide all logging", action="store_true")
+group.add_argument("-v", "--verbose", help="show debug logging", action="store_true")
 parser.add_argument(
     "-i",
     "--refresh-interval",
@@ -97,9 +97,14 @@ parser.add_argument("--version", action="version", version="%(prog)s " + version
 args = parser.parse_args()
 
 # Set the logger to debug if verbose is enabled
-if args.verbose:
+if args.quiet:
+    logger.setLevel(logging.CRITICAL)
+    logger.debug("Quiet output enabled.")
+elif args.verbose:
     logger.setLevel(logging.DEBUG)
     logger.debug("Verbose output enabled.")
+else:
+    logger.setLevel(logging.INFO)
 
 # Log the start of the program
 logger.info("Starting InstaWebhooks...")
@@ -188,7 +193,7 @@ async def send_to_discord(post: Post):
     if args.message_content:
         format_message(post)
 
-    logger.debug("Sending post sent to Discord")
+    logger.debug("Sending post sent to Discord...")
 
     if not args.no_embed:
         embed, post_image_file, profile_pic_file = await create_embed(post)
@@ -221,12 +226,12 @@ async def check_for_new_posts():
         lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
     ):
         new_posts_found = True
-        logger.debug("New post found: https://www.instagram.com/p/%s", post.shortcode)
+        logger.info("New post found: https://www.instagram.com/p/%s", post.shortcode)
         await send_to_discord(post)
         sleep(2)  # Avoid 30 requests per minute rate limit
 
     if not new_posts_found:
-        logger.debug("No new posts found.")
+        logger.info("No new posts found.")
 
 
 def main():
