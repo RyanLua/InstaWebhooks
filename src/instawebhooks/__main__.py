@@ -17,7 +17,8 @@ try:
     from instaloader import Instaloader, LoginRequiredException, Post, Profile
 except ModuleNotFoundError as exc:
     raise SystemExit(
-        exc.name + " not found.\n  pip install [--user] " + exc.name) from exc
+        f"{exc.name} not found.\n  pip install [--user] {exc.name}"
+    ) from exc
 
 
 def regex(pattern: str):
