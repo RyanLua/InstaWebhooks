@@ -13,21 +13,11 @@ import importlib.metadata
 
 try:
     from aiohttp import ClientSession
-except ModuleNotFoundError as exc:
-    raise SystemExit("Aiohttp not found.\n  pip install [--user] aiohttp") from exc
-
-try:
     from discord import Embed, File, SyncWebhook
-except ModuleNotFoundError as exc:
-    raise SystemExit(
-        "Discord.py not found.\n  pip install [--user] discord.py"
-    ) from exc
-
-try:
     from instaloader import Instaloader, LoginRequiredException, Post, Profile
 except ModuleNotFoundError as exc:
     raise SystemExit(
-        "Instaloader not found.\n  pip install [--user] instaloader"
+        f"{exc.name} not found.\n  pip install [--user] {exc.name}"
     ) from exc
 
 
