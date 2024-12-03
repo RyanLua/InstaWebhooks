@@ -1,6 +1,7 @@
 """Module for sending new Instagram posts to Discord."""
 
 import asyncio
+import importlib.metadata
 import io
 import logging
 import re
@@ -9,14 +10,13 @@ from argparse import ArgumentParser
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
-import importlib.metadata
 
 try:
     from aiohttp import ClientSession
     from discord import Embed, File, SyncWebhook
+    from instaloader.exceptions import LoginRequiredException
     from instaloader.instaloader import Instaloader
     from instaloader.structures import Post, Profile
-    from instaloader.exceptions import LoginRequiredException
 except ModuleNotFoundError as exc:
     raise SystemExit(
         f"{exc.name} not found.\n  pip install [--user] {exc.name}"
@@ -47,7 +47,9 @@ logging.basicConfig(
 # Parse command line arguments
 parser = ArgumentParser(
     prog="instawebhooks",
-    description="Monitor Instagram accounts for new posts and send them to a Discord webhook",
+    description=(
+        "Monitor Instagram accounts for new posts and send them to a Discord webhook"
+    ),
     epilog="https://github.com/RaenLua/InstaWebhooks",
 )
 group = parser.add_mutually_exclusive_group()
