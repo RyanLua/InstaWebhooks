@@ -26,7 +26,7 @@ except ModuleNotFoundError as exc:
 def regex(pattern: str):
     """Argument type for matching a regex pattern"""
 
-    def closure_check_regex(arg_value):
+    def closure_check_regex(arg_value: str):
         if not re.match(pattern, arg_value):
             raise ValueError(f"invalid value: '{arg_value}'")
         return arg_value
@@ -165,12 +165,12 @@ def format_message(post: Post):
 
     logger.debug("Formatting message for placeholders...")
 
-    placeholders = {
+    placeholders: dict[str, str] = {
         "{post_url}": f"https://www.instagram.com/p/{post.shortcode}/",
         "{owner_url}": f"https://www.instagram.com/{post.owner_username}/",
         "{owner_name}": post.owner_profile.full_name,
         "{owner_username}": post.owner_username,
-        "{post_caption}": post.caption,
+        "{post_caption}": post.caption or "",
         "{post_shortcode}": post.shortcode,
         "{post_image_url}": post.url,
     }
