@@ -44,7 +44,7 @@ jobs:
       id-token: write
 
     environment:
-      name: PyPI
+      name: pypi
       url: https://pypi.org/p/instawebhooks
 
     steps:
@@ -68,7 +68,7 @@ jobs:
       id-token: write
 
     environment:
-      name: TestPyPI
+      name: testpypi
       url: https://test.pypi.org/p/instawebhooks
 
     steps:
