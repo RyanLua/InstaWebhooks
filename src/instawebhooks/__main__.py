@@ -14,7 +14,9 @@ import importlib.metadata
 try:
     from aiohttp import ClientSession
     from discord import Embed, File, SyncWebhook
-    from instaloader import Instaloader, LoginRequiredException, Post, Profile
+    from instaloader.instaloader import Instaloader
+    from instaloader.structures import Post, Profile
+    from instaloader.exceptions import LoginRequiredException
 except ModuleNotFoundError as exc:
     raise SystemExit(
         f"{exc.name} not found.\n  pip install [--user] {exc.name}"
