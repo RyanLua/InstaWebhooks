@@ -45,3 +45,9 @@ Sponsor = "https://github.com/sponsors/RyanLua"
 
 [project.scripts]
 instawebhooks = "instawebhooks.__main__:main"
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.format]
+max-line-length = "88"

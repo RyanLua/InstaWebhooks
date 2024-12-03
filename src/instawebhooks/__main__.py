@@ -1,40 +1,33 @@
 """Module for sending new Instagram posts to Discord."""
 
 import asyncio
+import importlib.metadata
 import io
 import logging
 import re
 import sys
 from argparse import ArgumentParser
+from typing import Dict
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
-import importlib.metadata
 
 try:
     from aiohttp import ClientSession
-except ModuleNotFoundError as exc:
-    raise SystemExit("Aiohttp not found.\n  pip install [--user] aiohttp") from exc
-
-try:
     from discord import Embed, File, SyncWebhook
+    from instaloader.exceptions import LoginRequiredException
+    from instaloader.instaloader import Instaloader
+    from instaloader.structures import Post, Profile
 except ModuleNotFoundError as exc:
     raise SystemExit(
-        "Discord.py not found.\n  pip install [--user] discord.py"
-    ) from exc
-
-try:
-    from instaloader import Instaloader, LoginRequiredException, Post, Profile
-except ModuleNotFoundError as exc:
-    raise SystemExit(
-        "Instaloader not found.\n  pip install [--user] instaloader"
+        f"{exc.name} not found.\n  pip install [--user] {exc.name}"
     ) from exc
 
 
 def regex(pattern: str):
     """Argument type for matching a regex pattern"""
 
-    def closure_check_regex(arg_value):
+    def closure_check_regex(arg_value: str):
         if not re.match(pattern, arg_value):
             raise ValueError(f"invalid value: '{arg_value}'")
         return arg_value
@@ -55,7 +48,9 @@ logging.basicConfig(
 # Parse command line arguments
 parser = ArgumentParser(
     prog="instawebhooks",
-    description="Monitor Instagram accounts for new posts and send them to a Discord webhook",
+    description=(
+        "Monitor Instagram accounts for new posts and send them to a Discord webhook"
+    ),
     epilog="https://github.com/RaenLua/InstaWebhooks",
 )
 group = parser.add_mutually_exclusive_group()
@@ -179,13 +174,12 @@ def format_message(post: Post):
     """Format the message content with placeholders"""
 
     logger.debug("Formatting message for placeholders...")
-
-    placeholders = {
+    placeholders: Dict[str, str] = {
         "{post_url}": f"https://www.instagram.com/p/{post.shortcode}/",
         "{owner_url}": f"https://www.instagram.com/{post.owner_username}/",
         "{owner_name}": post.owner_profile.full_name,
         "{owner_username}": post.owner_username,
-        "{post_caption}": post.caption,
+        "{post_caption}": post.caption or "",
         "{post_shortcode}": post.shortcode,
         "{post_image_url}": post.url,
     }
