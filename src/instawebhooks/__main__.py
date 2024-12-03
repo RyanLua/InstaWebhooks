@@ -7,10 +7,10 @@ import logging
 import re
 import sys
 from argparse import ArgumentParser
-from typing import Dict
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
+from typing import Dict, List
 
 try:
     from aiohttp import ClientSession
@@ -232,7 +232,7 @@ async def check_for_new_posts(catchup: int = args.catchup):
 
     if catchup > 0:
         logger.info("Sending last %s posts on startup...", catchup)
-        posts_to_send: list[Post] = []
+        posts_to_send: List[Post] = []
         for post in takewhile(lambda _: catchup > 0, posts):
             posts_to_send.append(post)
             catchup -= 1
