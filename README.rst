@@ -41,6 +41,11 @@ Monitor Instagram accounts for new posts and send them to a Discord webhook.
 * Customizable **Discord embeds** for new posts and message contents including **mentions/pings**
 * **User-definable refresh interval** for checking for new posts the second they are posted
 
+.. code-block:: console
+
+    instawebhooks [-h] [-q | -v] [-i REFRESH_INTERVAL] [-c MESSAGE_CONTENT] [-e] [--version]
+                  instagram_username discord_webhook_url
+
 .. image:: https://raw.githubusercontent.com/RyanLua/InstaWebhooks/main/assets/ScreenshotEmbedExample.png
    :alt: Example of a new post notification
    :width: 512px
@@ -57,13 +62,13 @@ Example
 
 Below, InstaWebhooks is monitoring the Instagram account `raenlua <https://www.instagram.com/raenlua/>`_ for new posts and sending them to a Discord webhook every 30 minutes and sends a message to Discord with the post URL and the owner's name.
 
-.. code-block::
+.. code-block:: console
 
-   $ instawebhooks -i 1800 -c "New post from {owner_name}: {post_url}" raenlua https://discord.com/api/webhooks/0123456789/abcdefghijklmnopqrstuvwxyz
-   07/29/2024 10:02:10 PM - INFO - Starting InstaWebhooks...
-   07/29/2024 10:02:14 PM - INFO - InstaWebhooks started successfully.
-   07/29/2024 10:02:14 PM - INFO - Monitoring 'raenlua' every 1800 seconds on https://discord.com/api/webhooks/0123456789/abcdefghijklmnopqrstuvwxyz.
-   07/29/2024 10:02:18 PM - INFO - New post sent to Discord successfully.
+    # Install InstaWebhooks
+    pip install instawebhooks
+
+    # Run InstaWebhooks with custom message contents
+    instawebhooks -c "New post from {owner_name}: {post_url}" raenlua https://discord.com/api/webhooks/0123456789/abcdefghijklmnopqrstuvwxyz
 
 What it looks like:
 
@@ -76,9 +81,9 @@ Installation
 
 InstaWebhooks is available on `PyPI <https://pypi.org/project/instawebhooks/>`_, and can be installed using `pip`:
 
-.. code-block::
+.. code-block:: console
 
-   pip install instawebhooks
+    pip install instawebhooks
 
 For more ways to install, see `Installation <https://github.com/RyanLua/InstaWebhooks/wiki/Installation>`_.
 
@@ -89,9 +94,9 @@ You can run ``instawebhooks --help`` to see the full list of options and argumen
 
 The most basic usage of InstaWebhooks is to provide an Instagram account and a Discord webhook URL (replace ``<INSTAGRAM_USERNAME>`` and ``<DISCORD_WEBHOOK_URL>``):
 
-.. code-block::
+.. code-block:: console
 
-   instawebhooks <INSTAGRAM_USERNAME> <DISCORD_WEBHOOK_URL>
+    instawebhooks <INSTAGRAM_USERNAME> <DISCORD_WEBHOOK_URL>
 
 For more about each option and argument, including example templates, see `Usage <https://github.com/RyanLua/InstaWebhooks/wiki/Usage>`_.
 
