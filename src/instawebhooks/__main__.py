@@ -232,7 +232,7 @@ async def check_for_new_posts(catchup: int = args.catchup):
 
     if catchup > 0:
         logger.info("Sending last %s posts on startup...", catchup)
-        posts_to_send = []
+        posts_to_send: list[Post] = []
         for post in takewhile(lambda _: catchup > 0, posts):
             posts_to_send.append(post)
             catchup -= 1
