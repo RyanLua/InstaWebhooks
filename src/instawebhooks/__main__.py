@@ -7,6 +7,7 @@ import logging
 import re
 import sys
 from argparse import ArgumentParser
+from typing import Dict
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
@@ -166,8 +167,7 @@ def format_message(post: Post):
     """Format the message content with placeholders"""
 
     logger.debug("Formatting message for placeholders...")
-
-    placeholders: dict[str, str] = {
+    placeholders: Dict[str, str] = {
         "{post_url}": f"https://www.instagram.com/p/{post.shortcode}/",
         "{owner_url}": f"https://www.instagram.com/{post.owner_username}/",
         "{owner_name}": post.owner_profile.full_name,
