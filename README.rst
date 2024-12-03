@@ -33,7 +33,7 @@ InstaWebhooks - Discord webhooks for Instagram
    :target: https://discord.gg/wmM64GcZwe
    :alt: Discord
 
-|ci-badge| |pypi-version| |python-versions| |license-badge| |code-style-badge| |lint-badge | |discord-badge|
+|ci-badge| |pypi-version| |python-versions| |license-badge| |code-style-badge| |lint-badge| |discord-badge|
 
 Monitor Instagram accounts for new posts and send them to a Discord webhook.
 
