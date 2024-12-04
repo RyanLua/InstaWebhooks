@@ -8,7 +8,7 @@
 
 Monitor Instagram accounts for new posts and send them to a Discord webhook.
 
-* Works with **any Instagram account**, including private accounts if you are a follower
+* Works with **any Instagram account**, including private accounts
 * Customizable **Discord embeds** for new posts and message contents including **mentions/pings**
 * **User-definable refresh interval** for checking for new posts the second they are posted
 
@@ -18,11 +18,13 @@ Monitor Instagram accounts for new posts and send them to a Discord webhook.
 
 InstaWebhooks is a Python package CLI that allows you to monitor Instagram accounts for new posts and send them to a Discord webhook. It is designed to be simple to use and easy to set up, with a focus on customizability and ease of use.
 
-Internally, InstaWebhooks uses [Instaloader](https://instaloader.github.io/) to fetch Instagram posts and [Discord Webhooks](https://discord.com/developers/docs/resources/webhook) to send messages to Discord via [requests](https://requests.readthedocs.io/en/latest/) which happens to be the same dependancy Instaloader uses. It uses [argparse](https://docs.python.org/3/library/argparse.html) for the CLI and [logging](https://docs.python.org/3/library/logging.html) for logging.
+* [Instaloader](https://instaloader.github.io/) to fetch Instagram posts
+* [discord.py](https://github.com/Rapptz/discord.py) to send messages to Discord
+* [argparse](https://docs.python.org/3/library/argparse.html) & [logging](https://docs.python.org/3/library/logging.html) for handing the CLI and logging
 
 ## Example
 
-Below, InstaWebhooks is monitoring the Instagram account [`raenlua`](https://www.instagram.com/raenlua/) for new posts and sending them to a Discord webhook every 30 minutes and sends a message to Discord with the post URL and the owner's name.
+Below, InstaWebhooks is monitoring the Instagram account [`@raenlua`](https://www.instagram.com/raenlua/) for new posts and sending them to a Discord webhook every 30 minutes and sends a message to Discord with the post URL and the owner's name.
 
 ```console
 $ instawebhooks -i 1800 -c "New post from {owner_name}: {post_url}" raenlua https://discord.com/api/webhooks/0123456789/abcdefghijklmnopqrstuvwxyz
