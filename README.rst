@@ -41,7 +41,7 @@ Monitor Instagram accounts for new posts and send them to a Discord webhook.
 * Customizable **Discord embeds** for new posts and message contents including **mentions/pings**
 * **User-definable refresh interval** for checking for new posts the second they are posted
 
-.. code-block:: console
+.. code:: console
 
     instawebhooks [-h] [-q | -v] [-i REFRESH_INTERVAL] [-c MESSAGE_CONTENT] [-e] [--version]
                   instagram_username discord_webhook_url
@@ -62,7 +62,7 @@ Example
 
 Below, InstaWebhooks is monitoring the Instagram account `raenlua <https://www.instagram.com/raenlua/>`_ for new posts and sending them to a Discord webhook every 30 minutes and sends a message to Discord with the post URL and the owner's name.
 
-.. code-block:: console
+.. code:: console
 
     # Install InstaWebhooks
     pip install instawebhooks
@@ -81,7 +81,7 @@ Installation
 
 InstaWebhooks is available on `PyPI <https://pypi.org/project/instawebhooks/>`_, and can be installed using `pip`:
 
-.. code-block:: console
+.. code:: console
 
     pip install instawebhooks
 
@@ -94,7 +94,7 @@ You can run ``instawebhooks --help`` to see the full list of options and argumen
 
 The most basic usage of InstaWebhooks is to provide an Instagram account and a Discord webhook URL (replace ``<INSTAGRAM_USERNAME>`` and ``<DISCORD_WEBHOOK_URL>``):
 
-.. code-block:: console
+.. code:: console
 
     instawebhooks <INSTAGRAM_USERNAME> <DISCORD_WEBHOOK_URL>
 

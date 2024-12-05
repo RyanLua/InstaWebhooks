@@ -13,13 +13,13 @@ Quickstart
 
 With `Python <https://www.python.org/>`_ installed, install InstaWebhooks with `pip <https://pypi.org/project/pip/>`_:
 
-.. code-block:: console
+.. code:: console
 
     $ pip install instawebhooks
 
 After installing, you can run InstaWebhooks with the following command (change the username and webhook URL to your own):
 
-.. code-block:: console
+.. code:: console
 
     $ instawebhooks raenlua https://discord.com/api/webhooks/0123456789/abcdefghijklmnopqrstuvwxyz
 
@@ -30,6 +30,5 @@ Contents
 
 .. toctree::
 
-   Home <self>
    installation
    usage

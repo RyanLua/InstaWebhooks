@@ -10,13 +10,13 @@ The recommended way to install is using `pip <https://pypi.org/project/pip/>`_. 
 
 To install:
 
-.. code-block:: console
+.. code:: console
 
     $ pip install instawebhooks
 
 To upgrade to its latest release:
 
-.. code-block:: console
+.. code:: console
 
     $ pip install --upgrade instawebhooks
 
@@ -66,24 +66,24 @@ Installing from source code is another option to contribute or use the latest de
 
 1. `Clone the repository <https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository>`_ onto your machine
 
-.. code-block:: console
+.. code:: console
 
     $ git clone https://github.com/RyanLua/InstaWebhooks.git
 
 2. Navigate to the repository's directory
 
-.. code-block:: console
+.. code:: console
 
     $ cd InstaWebhooks
 
 3. Install the required packages that InstaWebhooks uses:
 
-.. code-block:: console
+.. code:: console
 
     $ pip install -r requirements.txt
 
 4. Enter `Development Mode <https://setuptools.pypa.io/en/latest/userguide/development_mode.html>`_:
 
-.. code-block:: console
+.. code:: console
 
     $ pip install --editable .
