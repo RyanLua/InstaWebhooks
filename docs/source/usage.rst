@@ -1,9 +1,6 @@
 Usage
 =====
 
-Installation
-------------
-
 Usage is simple once you have everything installed, just run the script with the Instagram username you want to monitor and the Discord webhook URL you want to send new posts to.
 
 .. code-block:: console
