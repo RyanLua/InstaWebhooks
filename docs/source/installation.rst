@@ -6,7 +6,7 @@ InstaWebhooks expects that you have `Python 3.8 or higher <https://www.python.or
 Using pip (recommended)
 -----------------------
 
-The recommended way to install is using `pip <https://pypi.org/project/pip/>`_. This allows for easy installation, upgrading, and installation.
+The recommended way to install is using `pip <https://pypi.org/project/pip/>`_. This allows for easy installation and upgrading.
 
 To install:
 
@@ -23,7 +23,7 @@ To upgrade to its latest release:
 From development container
 --------------------------
 
-We fully support `development containers <https://containers.dev/>`_ for easily getting started, whether you want to test out InstaWebhooks before installing it or if you want to contribute.
+`Development containers <https://containers.dev/>`_ can be used setup your machine for contributing InstaWebhooks.
 
 GitHub Codespaces
 ~~~~~~~~~~~~~~~~~
@@ -62,7 +62,7 @@ For more information about dev containers in Visual Studio Code, see `Developing
 From source code
 ----------------
 
-You can additionally install from source code. This allows you to modify the Python code yourself (i.e. change the embed looks or message contents).
+Installing from source code is another option to contribute or use the latest development version.
 
 1. `Clone the repository <https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository>`_ onto your machine
 
