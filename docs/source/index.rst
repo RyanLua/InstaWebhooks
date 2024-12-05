@@ -32,3 +32,10 @@ Contents
 
    installation
    usage
+
+.. toctree::
+   :caption: Project
+
+   Contributing <https://github.com/RyanLua/InstaWebhooks/blob/docs-site/CONTRIBUTING.md>
+   Code of Conduct <https://github.com/RyanLua/InstaWebhooks/tree/docs-site?tab=coc-ov-file#readme>
+   GitHub <https://github.com/RyanLua/InstaWebhooks>
