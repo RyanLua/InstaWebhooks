@@ -34,8 +34,10 @@ GitHub Codespaces
 
 1. To get started, click the "Open in GitHub Codespaces" badge or the Code button, then click the Codespaces tab, and "Create codespace on main"
 
-.. image:: https://github.com/user-attachments/assets/229f37b8-9650-4809-b79a-37a565f6c855
+.. figure:: https://github.com/user-attachments/assets/229f37b8-9650-4809-b79a-37a565f6c855
    :alt: Create codespace on main
+
+   Button to create codespace on main
 
 2. You may be prompted to configure your codespace, you can leave it alone since the default configuration is adequate enough
 3. Wait for the codespace to be created and fully loaded. InstaWebhooks will be installed automatically.
@@ -52,8 +54,10 @@ Visual Studio Code
 1. Follow the `installation steps for Visual Studio Code Dev Containers <https://code.visualstudio.com/docs/devcontainers/containers#_installation>`_.
 2. Click the "Open in Dev Containers" badge or locally clone this repository and click "Reopen in Container" from the `Dev Containers extension <https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers>`_.
 
-.. image:: https://github.com/user-attachments/assets/c1fb1ba6-a423-4e03-9d69-d7df6635583d
+.. figure:: https://github.com/user-attachments/assets/c1fb1ba6-a423-4e03-9d69-d7df6635583d
    :alt: Reopen in Container
+
+   Notification to reopen in container
 
 3. Wait for the codespace to be created and fully loaded. InstaWebhooks will be installed automatically.
 
