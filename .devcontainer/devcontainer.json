@@ -11,9 +11,15 @@
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	"forwardPorts": [8000],
+	"portsAttributes": {
+		"8000": {
+			"label": "Sphinx",
+			"onAutoForward": "openBrowser"
+		}
+	},
 
-	"postCreateCommand": "pip3 install --user -r requirements.txt && pip install --editable .",
+	"postCreateCommand": "pip3 install --user -r requirements.txt -r docs/requirements.txt && pip install --editable .",
 
 	"customizations": {
 		"vscode": {
