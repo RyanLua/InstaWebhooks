@@ -14,7 +14,9 @@ release = '0.1.3'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    'sphinx_copybutton'
+]
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -26,3 +28,8 @@ exclude_patterns = []
 
 html_theme = "furo"
 html_static_path = ['_static']
+
+# -- Options for sphinx_copybutton ----------------------------------------------------
+
+copybutton_prompt_text = r"\$ | C\:\> "
+copybutton_prompt_is_regexp = True
