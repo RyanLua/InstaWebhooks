@@ -10,6 +10,7 @@ project = 'InstaWebhooks'
 copyright = '2024, Ryan Luu'
 author = 'Ryan Luu'
 release = '0.1.3'
+version = '0.1.3'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
