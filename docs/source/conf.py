@@ -30,6 +30,7 @@ html_theme = "furo"
 html_static_path = ['_static']
 
 html_theme_options = {
+    "announcement": "This is a early version of the documentation and not final.",
     "source_repository": "https://github.com/RyanLua/InstaWebhooks",
     "source_branch": "main",
     "source_directory": "docs/source",
