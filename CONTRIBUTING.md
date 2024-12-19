@@ -1,4 +1,4 @@
-# How to contribute
+# How to Contribute
 
 Thank you for considering contributing to our project! Here are some guidelines to help you get started.
 
@@ -28,3 +28,28 @@ This project uses [Black](https://github.com/psf/black) for code styling and [Py
 For installing this project, see "[Installation](https://github.com/RyanLua/InstaWebhooks/wiki/Installation)."
 
 This project supports and recommends [installing as a development container](https://github.com/RyanLua/InstaWebhooks/wiki/Installation#from-development-container) for contributing.
+
+## Building Documentation
+
+Our documentation is built using [Sphinx](https://pypi.org/project/Sphinx/). The documentation is written in reStructuredText.
+
+To install the documentation dependencies, run:
+
+```console
+$ pip install -r docs/requirements.txt
+```
+
+To build the documentation with autobuild (recommended), run:
+
+```console
+$ sphinx-autobuild docs/source docs/_build/html
+```
+
+To build the documentation without autobuild, run:
+
+```console
+$ cd docs
+$ make html
+```
+
+The built documentation will be in `docs/_build/html`.
