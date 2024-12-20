@@ -9,7 +9,7 @@
 project = 'InstaWebhooks'
 copyright = '2024, Ryan Luu'
 author = 'Ryan Luu'
-release = '0.1.3'
+release = '0.1'
 version = '0.1.3'
 
 # -- General configuration ---------------------------------------------------
