@@ -4,7 +4,7 @@ babel==2.16.0
 beautifulsoup4==4.12.3
 certifi==2024.12.14
 charset-normalizer==3.4.0
-click==8.1.7
+click==8.1.8
 colorama==0.4.6
 docutils==0.21.2
 furo==2024.8.6
