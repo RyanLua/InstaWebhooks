@@ -16,7 +16,8 @@ version = '0.1.3'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx_copybutton'
+    'sphinx_copybutton',
+    'sphinxarg.ext',
 ]
 
 templates_path = ['_templates']
