@@ -30,6 +30,7 @@ Contents
 
 .. toctree::
 
+   getting-started
    installation
    usage
 
