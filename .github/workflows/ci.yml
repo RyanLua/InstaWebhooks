@@ -31,15 +31,15 @@ jobs:
 
     - name: Run Pylint
       run: |
-        pylint $(git ls-files '*.py')
+      pylint $(git ls-files 'src/**/*.py')
 
     - name: Run Black
       run: |
-        black $(git ls-files '*.py') --check
+      black $(git ls-files 'src/**/*.py') --check
 
     - name: Run Mypy
       run: |
-        mypy $(git ls-files '*.py')
+      mypy $(git ls-files 'src/**/*.py')
 
     - name: Run Sphinx Lint
       run: |
