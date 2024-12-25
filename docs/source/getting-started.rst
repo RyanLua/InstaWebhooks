@@ -73,4 +73,6 @@ It should look something like this:
 
 Now, whenever the Instagram account `@raenlua` posts a new photo, it will be sent to the Discord webhook.
 
+.. image:: _static/webhook-message.png
+
 For more information about using InstaWebhooks, see the `usage guide <usage.html>`_.
