@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '**.py'
+      - '**.rst'
       - '.github/workflows/ci.yml'
 
 jobs:
