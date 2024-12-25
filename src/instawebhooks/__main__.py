@@ -1,15 +1,16 @@
 """Module for sending new Instagram posts to Discord."""
 
 import asyncio
-import importlib.metadata
 import io
 import logging
 import re
 import sys
-from typing import Dict
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
+from typing import Dict
+
+from .parser import parser
 
 try:
     from aiohttp import ClientSession
@@ -22,21 +23,6 @@ except ModuleNotFoundError as exc:
         f"{exc.name} not found.\n  pip install [--user] {exc.name}"
     ) from exc
 
-from .parser import parser
-
-
-def regex(pattern: str):
-    """Argument type for matching a regex pattern"""
-
-    def closure_check_regex(arg_value: str):
-        if not re.match(pattern, arg_value):
-            raise ValueError(f"invalid value: '{arg_value}'")
-        return arg_value
-
-    return closure_check_regex
-
-
-version = importlib.metadata.version("instawebhooks")
 
 # Set up logging
 logger = logging.getLogger(__name__)
