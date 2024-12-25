@@ -31,7 +31,7 @@
     {
       "label": "Build documentation",
       "type": "shell",
-      "command": "sphinx-autobuild docs/source docs/_build/html --open-browser",
+      "command": "sphinx-autobuild docs/source docs/_build/html",
       "problemMatcher": []
     }
   ]
