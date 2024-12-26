@@ -44,7 +44,7 @@ Reference
 ---------
 
 .. argparse::
-   :filename: ../src/instawebhooks/parser.py
+   :module: src.instawebhooks.parser
    :func: parser
    :prog: instawebhooks
    :noepilog:
