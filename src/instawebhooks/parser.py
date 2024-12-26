@@ -16,7 +16,10 @@ def regex(pattern: str):
     return closure_check_regex
 
 
-version = importlib.metadata.version("instawebhooks")
+try:
+    version = importlib.metadata.version("instawebhooks")
+except importlib.metadata.PackageNotFoundError:
+    version = "unknown"
 
 # Parse command line arguments
 parser = ArgumentParser(
