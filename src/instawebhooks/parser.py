@@ -17,9 +17,9 @@ def regex(pattern: str):
 
 
 try:
-    version = importlib.metadata.version("instawebhooks")
+    VERSION = importlib.metadata.version("instawebhooks")
 except importlib.metadata.PackageNotFoundError:
-    version = "unknown"
+    VERSION = "unknown"
 
 # Parse command line arguments
 parser = ArgumentParser(
@@ -64,4 +64,4 @@ parser.add_argument(
     help="don't show the post embed and only send message content",
     action="store_true",
 )
-parser.add_argument("--version", action="version", version="%(prog)s " + version)
+parser.add_argument("--version", action="version", version="%(prog)s " + VERSION)
