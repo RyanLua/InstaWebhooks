@@ -1,0 +1,38 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build release distributions",
+      "type": "shell",
+      "command": "pip install build && python -m build",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Install local project",
+      "type": "shell",
+      "command": "pip install .",
+      "problemMatcher": []
+    },
+    {
+      "label": "Install local project (editable)",
+      "type": "shell",
+      "command": "pip install .",
+      "args": [
+        "-e"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Build documentation",
+      "type": "shell",
+      "command": "sphinx-autobuild docs/source docs/_build/html",
+      "problemMatcher": []
+    }
+  ]
+}

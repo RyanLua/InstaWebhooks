@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '**.py'
+      - '**.rst'
       - '.github/workflows/ci.yml'
 
 jobs:
@@ -26,17 +27,21 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip pylint black mypy
+        python -m pip install --upgrade pip pylint black mypy sphinx-lint
         pip install -r requirements.txt
 
     - name: Run Pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint $(git ls-files 'src/**/*.py')
 
     - name: Run Black
       run: |
-        black $(git ls-files '*.py') --check
+        black $(git ls-files 'src/**/*.py') --check
 
     - name: Run Mypy
       run: |
-        mypy $(git ls-files '*.py')
+        mypy $(git ls-files 'src/**/*.py')
+
+    - name: Run Sphinx Lint
+      run: |
+        sphinx-lint $(git ls-files '*.rst')
