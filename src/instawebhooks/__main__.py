@@ -8,7 +8,7 @@ import sys
 from datetime import datetime, timedelta
 from itertools import dropwhile, takewhile
 from time import sleep
-from typing import Dict
+from typing import Dict, List
 
 from .parser import parser
 
@@ -31,6 +31,7 @@ logging.basicConfig(
     datefmt="%m/%d/%Y %I:%M:%S %p",
     level=logging.INFO,
 )
+
 
 args = parser.parse_args()
 
@@ -148,7 +149,7 @@ async def send_to_discord(post: Post):
     logger.info("New post sent to Discord successfully.")
 
 
-async def check_for_new_posts():
+async def check_for_new_posts(catchup: int = args.catchup):
     """Check for new Instagram posts and send them to Discord"""
 
     logger.info("Checking for new posts")
@@ -162,12 +163,27 @@ async def check_for_new_posts():
 
     new_posts_found = False
 
+    async def send_post(post: Post):
+        logger.info("New post found: https://www.instagram.com/p/%s", post.shortcode)
+        await send_to_discord(post)
+
+    if catchup > 0:
+        logger.info("Sending last %s posts on startup...", catchup)
+        posts_to_send: List[Post] = []
+        for post in takewhile(lambda _: catchup > 0, posts):
+            posts_to_send.append(post)
+            catchup -= 1
+
+        # Reverse the posts to send oldest first
+        for post in reversed(posts_to_send):
+            await send_post(post)
+            sleep(2)  # Avoid 30 requests per minute rate limit
+
     for post in takewhile(
         lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
     ):
         new_posts_found = True
-        logger.info("New post found: https://www.instagram.com/p/%s", post.shortcode)
-        await send_to_discord(post)
+        await send_post(post)
         sleep(2)  # Avoid 30 requests per minute rate limit
 
     if not new_posts_found:
