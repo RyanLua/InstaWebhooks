@@ -2,10 +2,9 @@ name: Continuous Integration
 
 on:
   push:
-    paths:
-      - '**.py'
-      - '**.rst'
-      - '.github/workflows/ci.yml'
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
