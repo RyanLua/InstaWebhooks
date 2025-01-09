@@ -18,7 +18,7 @@
 		}
 	},
 
-	"postCreateCommand": "pip3 install --user -r requirements.txt -r docs/requirements.txt && pip install --editable .",
+	"postCreateCommand": "pip3 install -r docs/requirements.txt && pip install --editable .",
 
 	"customizations": {
 		"vscode": {
