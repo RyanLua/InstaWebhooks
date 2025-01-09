@@ -35,6 +35,8 @@ InstaWebhooks - Discord webhooks for Instagram
 
 |ci-badge| |pypi-version| |python-versions| |license-badge| |code-style-badge| |lint-badge| |discord-badge|
 
+| `Documentation <https://instawebhooks.readthedocs.io/>`_
+
 Monitor Instagram accounts for new posts and send them to a Discord webhook.
 
 * Works with **any Instagram account**, including private accounts if you are a follower
@@ -80,7 +82,7 @@ InstaWebhooks is available on `PyPI <https://pypi.org/project/instawebhooks/>`_,
 
     pip install instawebhooks
 
-For more ways to install, see `Installation <https://github.com/RyanLua/InstaWebhooks/wiki/Installation>`_.
+For more ways to install, see `Installation <https://instawebhooks.readthedocs.io/en/latest/installation.html>`_.
 
 Usage
 -----
@@ -93,11 +95,11 @@ The most basic usage of InstaWebhooks is to provide an Instagram account and a D
 
     instawebhooks <INSTAGRAM_USERNAME> <DISCORD_WEBHOOK_URL>
 
-For more about each option and argument, including example templates, see `Usage <https://github.com/RyanLua/InstaWebhooks/wiki/Usage>`_.
+For more about each option and argument, including example templates, see `Usage <https://instawebhooks.readthedocs.io/en/latest/usage.html>`_.
 
 Contributing
 ------------
 
 For contributions, see the `contributing guidelines <CONTRIBUTING.md>`_.
 
-This project supports `development containers <https://containers.dev/>`_, allowing you to instantly setup your development environment. For more, read about `installing from dev container <https://github.com/RyanLua/InstaWebhooks/wiki/Installation#from-development-container>`_.
+This project supports `development containers <https://containers.dev/>`_, allowing you to instantly setup your development environment. For more, read about `installing from dev container <https://instawebhooks.readthedocs.io/en/latest/installation.html#from-development-container>`_.
