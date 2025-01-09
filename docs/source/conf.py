@@ -5,6 +5,7 @@
 
 import os
 import sys
+from datetime import datetime, timezone
 from importlib.metadata import version
 
 # -- Path setup --------------------------------------------------------------
@@ -23,7 +24,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 __version__ = version("instawebhooks")
 
 project = 'InstaWebhooks'
-copyright = '2024-2025, Ryan Luu'
+copyright = f'2024-{datetime.now(tz=timezone.utc).year}, Ryan Luu'
 author = 'Ryan Luu'
 version = ".".join(__version__.split(".")[:2])
 release = __version__
