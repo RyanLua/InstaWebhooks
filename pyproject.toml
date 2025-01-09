@@ -4,9 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "instawebhooks"
-version = "0.1.3"
 description = "Discord webhooks for new Instagram posts from any profile"
-readme = "README.md"
+readme = "README.rst"
 requires-python = ">=3.8"
 keywords = ["webhooks", "feed", "embed", "Instagram", "Discord", "CLI"]
 authors = [
@@ -34,6 +33,7 @@ dependencies = [
   "requests",
   "instaloader",
 ]
+dynamic = ["version"]
 
 [project.urls]
 Homepage = "https://github.com/RyanLua/InstaWebhooks"
@@ -45,6 +45,9 @@ Sponsor = "https://github.com/sponsors/RyanLua"
 
 [project.scripts]
 instawebhooks = "instawebhooks.__main__:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "instawebhooks.__version__"}
 
 [tool.isort]
 profile = "black"

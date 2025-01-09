@@ -4,9 +4,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os
+import re
 import sys
 from datetime import datetime, timezone
-from importlib.metadata import version
 
 # -- Path setup --------------------------------------------------------------
 
@@ -15,13 +15,32 @@ from importlib.metadata import version
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 
+docs_dir = os.path.dirname(os.path.dirname(__file__))
 sys.path.insert(0, os.path.abspath('../..'))
 
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-__version__ = version("instawebhooks")
+# Find the version and release information.
+# We have a single source of truth for our version number: the __init__.py file.
+# This next bit of code reads from it.
+file_with_version = os.path.join(docs_dir, "..", "src", "instawebhooks", "__init__.py")
+with open(file_with_version) as f:
+    for line in f:
+        m = re.match(r'__version__ = "(.*)"', line)
+        if m:
+            __version__ = m.group(1)
+            # The short X.Y version.
+            version = ".".join(__version__.split(".")[:2])
+            # The full version, including alpha/beta/rc tags.
+            release = __version__
+            break
+    else:  # AKA no-break
+        version = release = "dev"
+
+print("version:", version)
+print("release:", release)
 
 project = 'InstaWebhooks'
 copyright = f'2024-{datetime.now(tz=timezone.utc).year}, Ryan Luu'
