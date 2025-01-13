@@ -90,7 +90,6 @@ html_theme_options = {
             "class": "",
         },
     ],
-    "announcement": "This is a early version of the documentation and not final.",
     "source_repository": "https://github.com/RyanLua/InstaWebhooks",
     "source_branch": "main",
     "source_directory": "docs/source",
