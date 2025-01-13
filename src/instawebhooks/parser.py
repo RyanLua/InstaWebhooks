@@ -29,7 +29,8 @@ parser = ArgumentParser(
     ),
     epilog="https://github.com/RaenLua/InstaWebhooks",
 )
-group = parser.add_mutually_exclusive_group()
+logging_group = parser.add_mutually_exclusive_group()
+login_group = parser.add_mutually_exclusive_group()
 parser.add_argument(
     "instagram_username",
     help="the Instagram username to monitor for new posts",
@@ -42,9 +43,13 @@ parser.add_argument(
         r"^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$"
     ),
 )
-group.add_argument("-q", "--quiet", help="hide all logging", action="store_true")
-group.add_argument("-v", "--verbose", help="show debug logging", action="store_true")
-parser.add_argument(
+logging_group.add_argument(
+    "-q", "--quiet", help="hide all logging", action="store_true"
+)
+logging_group.add_argument(
+    "-v", "--verbose", help="show debug logging", action="store_true"
+)
+login_group.add_argument(
     "-l",
     "--login",
     metavar=("USERNAME", "PASSWORD"),
@@ -52,7 +57,7 @@ parser.add_argument(
     help="login to instagram with username and password",
     nargs=2,
 )
-parser.add_argument(
+login_group.add_argument(
     "-t",
     "--interactive-login",
     metavar="USERNAME",
