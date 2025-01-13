@@ -15,7 +15,7 @@ from .parser import parser
 try:
     from aiohttp import ClientSession
     from discord import Embed, File, SyncWebhook
-    from instaloader.exceptions import LoginRequiredException
+    from instaloader.exceptions import LoginException, LoginRequiredException
     from instaloader.instaloader import Instaloader
     from instaloader.structures import Post, Profile
 except ModuleNotFoundError as exc:
@@ -44,6 +44,22 @@ elif args.verbose:
     logger.debug("Verbose output enabled.")
 else:
     logger.setLevel(logging.INFO)
+
+if args.login or args.interactive_login:
+    logger.info("Logging into Instagram...")
+    try:
+        if args.login:
+            Instaloader().login(*args.login)
+        if args.interactive_login:
+            Instaloader().interactive_login(args.interactive_login)
+    except LoginException as login_exc:
+        logger.critical("instaloader: error: %s", login_exc)
+        raise SystemExit(
+            "An error happened during login. Check if the provided username exists."
+        ) from login_exc
+    except KeyboardInterrupt:
+        print("\nLogin interrupted by user.")
+        sys.exit(0)
 
 # Log the start of the program
 logger.info("Starting InstaWebhooks...")
@@ -207,7 +223,7 @@ def main():
     except LoginRequiredException as login_exc:
         logger.critical("instaloader: error: %s", login_exc)
         raise SystemExit(
-            "Not logged into Instaloader.\n  instaloader --login YOUR-USERNAME"
+            "Not logged in. Please login with the --login flag."
         ) from login_exc
     except KeyboardInterrupt:
         print("\nInterrupted by user.")
