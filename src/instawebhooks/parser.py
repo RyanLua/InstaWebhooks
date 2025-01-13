@@ -45,9 +45,17 @@ parser.add_argument(
 group.add_argument("-q", "--quiet", help="hide all logging", action="store_true")
 group.add_argument("-v", "--verbose", help="show debug logging", action="store_true")
 parser.add_argument(
+    "-l",
+    "--login",
+    metavar="USERNAME",
+    type=str,
+    help="login to instagram with username",
+)
+parser.add_argument(
     "-p",
     "--catchup",
     help="send the last latest posts on startup regardless of time",
+    metavar="POSTS",
     type=int,
     default=0,
 )
