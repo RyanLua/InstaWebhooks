@@ -47,9 +47,17 @@ group.add_argument("-v", "--verbose", help="show debug logging", action="store_t
 parser.add_argument(
     "-l",
     "--login",
+    metavar=("USERNAME", "PASSWORD"),
+    type=str,
+    help="login to instagram with username and password",
+    nargs=2,
+)
+parser.add_argument(
+    "-t",
+    "--interactive-login",
     metavar="USERNAME",
     type=str,
-    help="login to instagram with username",
+    help="login to instagram with username and ask for password on terminal",
 )
 parser.add_argument(
     "-p",

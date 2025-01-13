@@ -45,10 +45,13 @@ elif args.verbose:
 else:
     logger.setLevel(logging.INFO)
 
-if args.login:
+if args.login or args.interactive_login:
     logger.info("Logging into Instagram...")
     try:
-        Instaloader().interactive_login(args.login)
+        if args.login:
+            Instaloader().login(*args.login)
+        if args.interactive_login:
+            Instaloader().interactive_login(args.interactive_login)
     except LoginException as login_exc:
         logger.critical("instaloader: error: %s", login_exc)
         raise SystemExit(
