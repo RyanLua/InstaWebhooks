@@ -145,24 +145,25 @@ def format_message(post: Post):
 async def send_to_discord(post: Post):
     """Send a new Instagram post to Discord using a webhook"""
 
-    webhook = SyncWebhook.from_url(args.discord_webhook_url)
+    for webhook_url in args.discord_webhook_url:
+        webhook = SyncWebhook.from_url(webhook_url)
 
-    if args.message_content:
-        format_message(post)
+        if args.message_content:
+            format_message(post)
 
-    logger.debug("Sending post sent to Discord...")
+        logger.debug("Sending post sent to Discord...")
 
-    if not args.no_embed:
-        embed, post_image_file, profile_pic_file = await create_embed(post)
-        webhook.send(
-            content=args.message_content,
-            embed=embed,
-            files=[post_image_file, profile_pic_file],
-        )
-    else:
-        webhook.send(content=args.message_content)
+        if not args.no_embed:
+            embed, post_image_file, profile_pic_file = await create_embed(post)
+            webhook.send(
+                content=args.message_content,
+                embed=embed,
+                files=[post_image_file, profile_pic_file],
+            )
+        else:
+            webhook.send(content=args.message_content)
 
-    logger.info("New post sent to Discord successfully.")
+        logger.info("New post sent to Discord successfully.")
 
 
 async def check_for_new_posts(catchup: int = args.catchup):
@@ -170,40 +171,41 @@ async def check_for_new_posts(catchup: int = args.catchup):
 
     logger.info("Checking for new posts")
 
-    posts = Profile.from_username(
-        Instaloader().context, args.instagram_username
-    ).get_posts()
+    for username in args.instagram_username:
+        posts = Profile.from_username(
+            Instaloader().context, username
+        ).get_posts()
 
-    since = datetime.now()
-    until = datetime.now() - timedelta(seconds=args.refresh_interval)
+        since = datetime.now()
+        until = datetime.now() - timedelta(seconds=args.refresh_interval)
 
-    new_posts_found = False
+        new_posts_found = False
 
-    async def send_post(post: Post):
-        logger.info("New post found: https://www.instagram.com/p/%s", post.shortcode)
-        await send_to_discord(post)
+        async def send_post(post: Post):
+            logger.info("New post found: https://www.instagram.com/p/%s", post.shortcode)
+            await send_to_discord(post)
 
-    if catchup > 0:
-        logger.info("Sending last %s posts on startup...", catchup)
-        posts_to_send: List[Post] = []
-        for post in takewhile(lambda _: catchup > 0, posts):
-            posts_to_send.append(post)
-            catchup -= 1
+        if catchup > 0:
+            logger.info("Sending last %s posts on startup...", catchup)
+            posts_to_send: List[Post] = []
+            for post in takewhile(lambda _: catchup > 0, posts):
+                posts_to_send.append(post)
+                catchup -= 1
 
-        # Reverse the posts to send oldest first
-        for post in reversed(posts_to_send):
+            # Reverse the posts to send oldest first
+            for post in reversed(posts_to_send):
+                await send_post(post)
+                sleep(2)  # Avoid 30 requests per minute rate limit
+
+        for post in takewhile(
+            lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
+        ):
+            new_posts_found = True
             await send_post(post)
             sleep(2)  # Avoid 30 requests per minute rate limit
 
-    for post in takewhile(
-        lambda p: p.date > until, dropwhile(lambda p: p.date > since, posts)
-    ):
-        new_posts_found = True
-        await send_post(post)
-        sleep(2)  # Avoid 30 requests per minute rate limit
-
-    if not new_posts_found:
-        logger.info("No new posts found.")
+        if not new_posts_found:
+            logger.info("No new posts found.")
 
 
 def main():

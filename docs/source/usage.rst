@@ -40,6 +40,12 @@ Examples
 
     $ instawebhooks -e -c "New post from {owner_name}: {post_url}" <INSTAGRAM_USERNAME> <DISCORD_WEBHOOK_URL>
 
+* Send new posts for multiple Instagram usernames and Discord webhook URLs:
+
+.. code:: console
+
+    $ instawebhooks <INSTAGRAM_USERNAME_1> <INSTAGRAM_USERNAME_2> ... <DISCORD_WEBHOOK_URL_1> <DISCORD_WEBHOOK_URL_2> ...
+
 Reference
 ---------
 
