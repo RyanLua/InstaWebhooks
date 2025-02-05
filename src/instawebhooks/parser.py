@@ -35,7 +35,7 @@ parser.add_argument(
     "instagram_username",
     help="the Instagram usernames to monitor for new posts",
     type=regex(r"^[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$"),
-    nargs='+',
+    nargs="+",
 )
 parser.add_argument(
     "discord_webhook_url",
@@ -43,7 +43,7 @@ parser.add_argument(
     type=regex(
         r"^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$"
     ),
-    nargs='+',
+    nargs="+",
 )
 logging_group.add_argument(
     "-q", "--quiet", help="hide all logging", action="store_true"

@@ -171,18 +171,18 @@ async def check_for_new_posts(catchup: int = args.catchup):
 
     logger.info("Checking for new posts")
 
-    for username in args.instagram_username:
-        posts = Profile.from_username(
-            Instaloader().context, username
-        ).get_posts()
+    since = datetime.now()
+    until = datetime.now() - timedelta(seconds=args.refresh_interval)
 
-        since = datetime.now()
-        until = datetime.now() - timedelta(seconds=args.refresh_interval)
+    for username in args.instagram_username:
+        posts = Profile.from_username(Instaloader().context, username).get_posts()
 
         new_posts_found = False
 
         async def send_post(post: Post):
-            logger.info("New post found: https://www.instagram.com/p/%s", post.shortcode)
+            logger.info(
+                "New post found: https://www.instagram.com/p/%s", post.shortcode
+            )
             await send_to_discord(post)
 
         if catchup > 0:
