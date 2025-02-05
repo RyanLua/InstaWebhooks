@@ -95,7 +95,3 @@ It should look something like this:
     $ instawebhooks raenlua anotheruser https://discord.com/api/webhooks/0123456789/abcdefghijklmnopqrstuvwxyz https://discord.com/api/webhooks/9876543210/zyxwvutsrqponmlkjihgfedcba
 
 Now, whenever the Instagram accounts `@raenlua` or `@anotheruser` post a new photo, it will be sent to the specified Discord webhooks.
-
-.. image:: _static/webhook-message-multiple.png
-
-For more information about using InstaWebhooks with multiple accounts or webhooks, see the `usage guide <usage.html>`_.
