@@ -29,7 +29,7 @@ InstaWebhooks - Discord webhooks for Instagram
    :target: https://github.com/pylint-dev/pylint
    :alt: Linting: pylint
 
-|ci-badge| |pypi-version| |python-versions| |license-badge| |code-style-badge| |lint-badge| |discord-badge|
+|ci-badge| |pypi-version| |python-versions| |license-badge| |code-style-badge| |lint-badge|
 
     `Documentation <https://instawebhooks.readthedocs.io/>`_
 
