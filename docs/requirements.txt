@@ -30,7 +30,7 @@ sphinxcontrib-htmlhelp==2.1.0
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==2.0.0
 sphinxcontrib-serializinghtml==2.0.0
-starlette==0.45.2
+starlette==0.46.2
 typing_extensions==4.12.2
 urllib3==2.3.0
 uvicorn==0.34.0
