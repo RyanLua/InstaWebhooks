@@ -6,8 +6,8 @@
 	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
 
 	"features": {
-		"ghcr.io/devcontainers-contrib/features/black:2": {},
-		"ghcr.io/devcontainers-contrib/features/pylint:2": {}
+		"ghcr.io/devcontainers-extra/features/black:2": {},
+		"ghcr.io/devcontainers-extra/features/pylint:2": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
