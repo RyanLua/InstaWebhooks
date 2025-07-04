@@ -3,7 +3,7 @@ anyio==4.8.0
 babel==2.17.0
 beautifulsoup4==4.12.3
 certifi==2025.6.15
-charset-normalizer==3.4.1
+charset-normalizer==3.4.2
 click==8.1.8
 colorama==0.4.6
 docutils==0.21.2
