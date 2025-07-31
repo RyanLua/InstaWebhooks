@@ -33,15 +33,17 @@ logging_group = parser.add_mutually_exclusive_group()
 login_group = parser.add_mutually_exclusive_group()
 parser.add_argument(
     "instagram_username",
-    help="the Instagram username to monitor for new posts",
+    help="the Instagram usernames to monitor for new posts",
     type=regex(r"^[a-zA-Z_](?!.*?\.{2})[\w.]{1,28}[\w]$"),
+    nargs="+",
 )
 parser.add_argument(
     "discord_webhook_url",
-    help="the Discord webhook URL to send new posts to",
+    help="the Discord webhook URLs to send new posts to",
     type=regex(
         r"^.*(discord|discordapp)\.com\/api\/webhooks\/([\d]+)\/([a-zA-Z0-9_.-]*)$"
     ),
+    nargs="+",
 )
 logging_group.add_argument(
     "-q", "--quiet", help="hide all logging", action="store_true"
