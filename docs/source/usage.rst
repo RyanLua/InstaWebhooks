@@ -62,3 +62,14 @@ Reference
 
         * ``https://discord.com/api/webhooks/{webhook_id}/{webhook_token}``
         * ``https://discordapp.com/api/webhooks/{webhook_id}/{webhook_token}``
+
+   -c --message-content : @after
+        Accepts placeholders for the post information:
+
+        * ``{post_url}`` - The URL to the post on Instagram: ``https://www.instagram.com/C8wRGmyR-6N``
+        * ``{owner_url}`` - The URL to the owner's profile on Instagram: ``https://www.instagram.com/raenlua``
+        * ``{owner_name}`` - The owner's full name: ``Ryan Luu``
+        * ``{owner_username}`` - The owner's username: ``raenlua``
+        * ``{post_caption}`` - The post's caption: ``This is a post caption.``
+        * ``{post_shortcode}`` - The post's shortcode: ``C8wRGmyR-6N``
+        * ``{post_image_url}`` - The post's image URL: ``https://www.instagram.com/p/C8wRGmyR-6N/media``
