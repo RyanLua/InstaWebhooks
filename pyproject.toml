@@ -38,7 +38,7 @@ dynamic = ["version"]
 
 [project.urls]
 Homepage = "https://github.com/RyanLua/InstaWebhooks"
-Documentation = "https://github.com/RyanLua/InstaWebhooks/wiki"
+Documentation = "https://instawebhooks.readthedocs.io"
 Repository = "https://github.com/RyanLua/InstaWebhooks.git"
 Issues = "https://github.com/RyanLua/InstaWebhooks/issues"
 Sponsor = "https://github.com/sponsors/RyanLua"

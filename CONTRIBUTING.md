@@ -25,9 +25,9 @@ This project uses [Black](https://github.com/psf/black) for code styling and [Py
 
 ## Installation
 
-For installing this project, see "[Installation](https://github.com/RyanLua/InstaWebhooks/wiki/Installation)."
+For installing this project, see "[Installation](https://instawebhooks.readthedocs.io/en/latest/installation.html)."
 
-This project supports and recommends [installing as a development container](https://github.com/RyanLua/InstaWebhooks/wiki/Installation#from-development-container) for contributing.
+This project supports and recommends [installing as a development container](https://instawebhooks.readthedocs.io/en/latest/installation.html#from-development-container) for contributing.
 
 ## Building Documentation
 
