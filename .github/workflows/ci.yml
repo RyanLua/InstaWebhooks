@@ -10,6 +10,9 @@ on:
       - '**/*.rst'
       - '**/*.txt'
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Build
