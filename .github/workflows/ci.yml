@@ -3,12 +3,12 @@ name: Continuous Integration
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'src/**/*.py'
   pull_request:
     branches: [ "main" ]
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.rst'
-      - '**/*.txt'
+    paths:
+      - 'src/**/*.py'
 
 permissions:
   contents: read
