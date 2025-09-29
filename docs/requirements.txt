@@ -1,4 +1,4 @@
-furo==2025.7.19
+furo==2025.9.25
 Sphinx==8.2.3
 sphinx-argparse==0.5.2
 sphinx-autobuild==2025.8.25
