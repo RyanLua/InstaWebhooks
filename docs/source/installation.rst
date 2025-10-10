@@ -1,7 +1,7 @@
 Installation
 ============
 
-InstaWebhooks expects that you have `Python 3.8 or higher <https://www.python.org/downloads/>`_ (and `pip <https://pypi.org/project/pip/>`_ if you are using it to install) to be installed.
+InstaWebhooks expects that you have `Python 3.10 or higher <https://www.python.org/downloads/>`_ (and `pip <https://pypi.org/project/pip/>`_ if you are using it to install) to be installed.
 
 Using pip (recommended)
 -----------------------
