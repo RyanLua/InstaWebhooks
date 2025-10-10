@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "instawebhooks"
 description = "Discord webhooks for new Instagram posts from any profile"
 readme = "README.rst"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 keywords = ["webhooks", "feed", "embed", "Instagram", "Discord", "CLI"]
 authors = [
   { name="Ryan Luu", email="ryan.luu@ryanluu.dev" },
@@ -20,7 +20,6 @@ classifiers = [
   "Topic :: Communications",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
