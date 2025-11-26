@@ -76,3 +76,22 @@ Now, whenever the Instagram account `@raenlua` posts a new photo, it will be sen
 .. image:: _static/webhook-message.png
 
 For more information about using InstaWebhooks, see the `usage guide <usage.html>`_.
+
+Setting up InstaWebhooks for multiple Instagram accounts or webhooks
+--------------------------------------------------------------------
+
+You can also set up InstaWebhooks to monitor multiple Instagram accounts or send new posts to multiple Discord webhooks.
+
+Replace ``<INSTAGRAM_USERNAME_1>``, ``<INSTAGRAM_USERNAME_2>``, etc. with the usernames of the Instagram accounts you want to monitor and ``<DISCORD_WEBHOOK_URL_1>``, ``<DISCORD_WEBHOOK_URL_2>``, etc. with the Discord webhook URLs you want to send new posts to.
+
+.. code:: console
+
+    $ instawebhooks <INSTAGRAM_USERNAME_1> <INSTAGRAM_USERNAME_2> ... <DISCORD_WEBHOOK_URL_1> <DISCORD_WEBHOOK_URL_2> ...
+
+It should look something like this:
+
+.. code:: console
+
+    $ instawebhooks raenlua anotheruser https://discord.com/api/webhooks/0123456789/abcdefghijklmnopqrstuvwxyz https://discord.com/api/webhooks/9876543210/zyxwvutsrqponmlkjihgfedcba
+
+Now, whenever the Instagram accounts `@raenlua` or `@anotheruser` post a new photo, it will be sent to the specified Discord webhooks.
