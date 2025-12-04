@@ -5,14 +5,14 @@ Thank you for considering contributing to our project! Here are some guidelines 
 ## Reporting Bugs
 
 > [!CAUTION]
-> Do not open up a GitHub issue if the bug is a security vulnerability, and instead open a [draft security advisory](https://github.com/RyanLua/InstaWebhooks/security/advisories/new) instead.
+> Do not open up a GitHub issue if the bug is a security vulnerability, and instead open a [draft security advisory](https://github.com/ryanlua/instawebhooks/security/advisories/new) instead.
 
-1. Ensure the bug was not already reported by searching on GitHub under [Issues](https://github.com/RyanLua/InstaWebhooks/issues).
+1. Ensure the bug was not already reported by searching on GitHub under [Issues](https://github.com/ryanlua/instawebhooks/issues).
 1. If you're unable to find an open issue addressing the problem, open a new one. Be sure to include a title and clear description, as much relevant information as possible, and a code sample or an executable test case demonstrating the expected behavior that is not occurring.
 
 ## Suggesting Features
 
-1. Check if the feature has already been suggested by searching on GitHub under [Issues](https://github.com/RyanLua/InstaWebhooks/issues).
+1. Check if the feature has already been suggested by searching on GitHub under [Issues](https://github.com/ryanlua/instawebhooks/issues).
 1. If the feature hasn't been suggested, open a new issue. Provide a clear and detailed explanation of the feature, why it would be useful, and how it should work.
 
 ## Coding Conventions

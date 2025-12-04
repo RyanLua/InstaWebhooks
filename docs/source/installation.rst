@@ -29,7 +29,7 @@ GitHub Codespaces
 ~~~~~~~~~~~~~~~~~
 
 .. image:: https://github.com/codespaces/badge.svg
-   :target: https://codespaces.new/RyanLua/InstaWebhooks?quickstart=1
+   :target: https://codespaces.new/ryanlua/instawebhooks?quickstart=1
    :alt: Open in GitHub Codespaces
 
 1. To get started, click the "Open in GitHub Codespaces" badge or the Code button, then click the Codespaces tab, and "Create codespace on main"
@@ -48,7 +48,7 @@ Visual Studio Code
 ~~~~~~~~~~~~~~~~~~
 
 .. image:: https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode
-   :target: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/RyanLua/InstaWebhooks
+   :target: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/ryanlua/instawebhooks
    :alt: Open in Dev Containers
 
 1. Follow the `installation steps for Visual Studio Code Dev Containers <https://code.visualstudio.com/docs/devcontainers/containers#_installation>`_.
@@ -72,13 +72,13 @@ Installing from source code is another option to contribute or use the latest de
 
 .. code:: console
 
-    $ git clone https://github.com/RyanLua/InstaWebhooks.git
+    $ git clone https://github.com/ryanlua/instawebhooks.git
 
 2. Navigate to the repository's directory
 
 .. code:: console
 
-    $ cd InstaWebhooks
+    $ cd instawebhooks
 
 3. Install the required packages that InstaWebhooks uses:
 

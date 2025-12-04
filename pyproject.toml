@@ -36,11 +36,11 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://github.com/RyanLua/InstaWebhooks"
+Homepage = "https://github.com/ryanlua/instawebhooks"
 Documentation = "https://instawebhooks.readthedocs.io"
-Repository = "https://github.com/RyanLua/InstaWebhooks.git"
-Issues = "https://github.com/RyanLua/InstaWebhooks/issues"
-Sponsor = "https://github.com/sponsors/RyanLua"
+Repository = "https://github.com/ryanlua/instawebhooks.git"
+Issues = "https://github.com/ryanlua/instawebhooks/issues"
+Sponsor = "https://github.com/sponsors/ryanlua"
 
 [project.scripts]
 instawebhooks = "instawebhooks.__main__:main"

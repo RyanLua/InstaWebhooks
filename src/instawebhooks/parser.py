@@ -27,7 +27,7 @@ parser = ArgumentParser(
     description=(
         "Monitor Instagram accounts for new posts and send them to a Discord webhook"
     ),
-    epilog="https://github.com/RaenLua/InstaWebhooks",
+    epilog="https://github.com/ryanlua/instawebhooks",
 )
 logging_group = parser.add_mutually_exclusive_group()
 login_group = parser.add_mutually_exclusive_group()

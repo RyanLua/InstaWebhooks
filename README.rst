@@ -1,12 +1,12 @@
-.. image:: https://raw.githubusercontent.com/RyanLua/InstaWebhooks/main/assets/Logo.png
+.. image:: https://raw.githubusercontent.com/ryanlua/instawebhooks/main/assets/Logo.png
    :alt: InstaWebhooks
    :width: 64px
 
 InstaWebhooks - Discord webhooks for Instagram
 ==============================================
 
-.. |ci-badge| image:: https://github.com/RyanLua/InstaWebhooks/actions/workflows/ci.yml/badge.svg
-   :target: https://github.com/RyanLua/InstaWebhooks/actions/workflows/ci.yml
+.. |ci-badge| image:: https://github.com/ryanlua/instawebhooks/actions/workflows/ci.yml/badge.svg
+   :target: https://github.com/ryanlua/instawebhooks/actions/workflows/ci.yml
    :alt: Continuous Integration
 
 .. |pypi-version| image:: https://img.shields.io/pypi/v/instawebhooks
@@ -39,7 +39,7 @@ Monitor Instagram accounts for new posts and send them to a Discord webhook.
 * Customizable **Discord embeds** for new posts and message contents including **mentions/pings**
 * **User-definable refresh interval** for checking for new posts the second they are posted
 
-.. image:: https://raw.githubusercontent.com/RyanLua/InstaWebhooks/main/assets/ScreenshotEmbedExample.png
+.. image:: https://raw.githubusercontent.com/ryanlua/instawebhooks/main/assets/ScreenshotEmbedExample.png
    :alt: Example of a new post notification
    :width: 512px
 

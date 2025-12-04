@@ -41,7 +41,7 @@ Contents
 .. toctree::
    :caption: Project
 
-   Contributing <https://github.com/RyanLua/InstaWebhooks/blob/main/CONTRIBUTING.md>
-   Code of Conduct <https://github.com/RyanLua/InstaWebhooks/tree/main?tab=coc-ov-file#readme>
-   GitHub <https://github.com/RyanLua/InstaWebhooks>
+   Contributing <https://github.com/ryanlua/instawebhooks/blob/main/CONTRIBUTING.md>
+   Code of Conduct <https://github.com/ryanlua/instawebhooks/tree/main?tab=coc-ov-file#readme>
+   GitHub <https://github.com/ryanlua/instawebhooks>
    PyPI <https://pypi.org/project/instawebhooks>
